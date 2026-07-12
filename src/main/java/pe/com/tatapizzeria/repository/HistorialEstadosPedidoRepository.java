@@ -6,7 +6,4 @@ import pe.com.tatapizzeria.entity.HistorialEstadosPedidoEntity;
 import java.util.List;
 
 public interface HistorialEstadosPedidoRepository extends JpaRepository<HistorialEstadosPedidoEntity, Long> {
-
-    @Query("SELECT s FROM HistorialEstadosPedidoEntity s WHERE s.estado = true")
-    List<HistorialEstadosPedidoEntity> findAllCustom();
 }
