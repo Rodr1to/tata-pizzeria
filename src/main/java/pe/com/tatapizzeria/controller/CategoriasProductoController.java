@@ -53,4 +53,24 @@ public class CategoriasProductoController {
         servicio.update(obj, id);
         return "redirect:/categorias/listar";
     }
+    
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarCategorias(Model modelo) {
+        modelo.addAttribute("listarcategorias", servicio.findAll());
+        return "categorias/habilitarcategorias";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarCategorias(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/categorias/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarCategorias(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/categorias/habilita";
+    }
+    
 }

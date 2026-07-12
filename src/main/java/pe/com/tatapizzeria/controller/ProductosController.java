@@ -59,4 +59,22 @@ public class ProductosController {
         servicio.update(obj, id);
         return "redirect:/productos/listar";
     }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarProductos(Model modelo) {
+        modelo.addAttribute("listarproductos", servicio.findAll());
+        return "productos/habilitarproductos";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarProductos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/productos/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarProductos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/productos/habilita";
+    }
 }
