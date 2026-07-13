@@ -53,4 +53,25 @@ public class TamanosController {
         servicio.update(obj, id);
         return "redirect:/tamanos/listar";
     }
+    
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarTamanos(Model modelo) {
+        modelo.addAttribute("listartamanos", servicio.findAll());
+        return "tamanos/habilitartamanos";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarTamanos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/tamanos/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarTamanos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/tamanos/habilita";
+    }
+    
+    
 }

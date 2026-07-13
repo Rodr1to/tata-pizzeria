@@ -11,4 +11,5 @@ public interface DireccionesClienteService {
     DireccionesClienteEntity update(DireccionesClienteEntity obj, Long id);
     DireccionesClienteEntity delete(Long id);
     DireccionesClienteEntity enable(Long id);
+    
 }

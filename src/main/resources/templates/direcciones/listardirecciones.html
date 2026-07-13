@@ -39,17 +39,45 @@
             color: var(--primary-orange);
             font-weight: 700;
         }
+        .btn-warning-custom {
+            background-color: #f0ad4e;
+            border-color: #f0ad4e;
+            color: white;
+        }
+        .btn-warning-custom:hover {
+            background-color: #ec971f;
+            border-color: #ec971f;
+            color: white;
+        }
+        .estado-habilitado {
+            color: #28a745;
+            font-weight: 600;
+        }
+        .estado-deshabilitado {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        .badge-etiqueta {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
     </style>
 </head>
 
 <body>
     <div class="container py-4">
         <h1 class="page-title">
-            <i class="bi bi-geo-alt"></i> Listado de Direcciones
+            <i class="bi bi-geo-alt"></i> Listado de Direcciones de Clientes
         </h1>
         <div class="mb-3">
             <a th:href="@{/direcciones/registro}" class="btn btn-primary-custom">
                 <i class="bi bi-plus-circle"></i> Registrar Dirección
+            </a>
+            <a th:href="@{/direcciones/habilita}" class="btn btn-warning-custom">
+                <i class="bi bi-arrow-repeat"></i> Habilitar Dirección
             </a>
             <a th:href="@{/menuprincipal}" class="btn btn-dark">
                 <i class="bi bi-arrow-left"></i> Regresar
@@ -64,22 +92,33 @@
                         <th scope="col">Cliente</th>
                         <th scope="col">Dirección</th>
                         <th scope="col">Referencia</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Predeterminada</th>
+                        <th scope="col">Distrito</th>
+                        <th scope="col">Etiqueta</th>
+                        <th scope="col">Coordenadas GPS</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Actualizar</th>
-                        <th scope="col">Eliminar</th>
+                        <th scope="col">Deshabilitar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="dir : ${listardirecciones}">
                         <th scope="row" th:text="${dir.id}"></th>
                         <td th:text="${dir.cliente.nombres} + ' ' + ${dir.cliente.apellidos}"></td>
-                        <td th:text="${dir.direccion}"></td>
+                        <td th:text="${dir.direccionTexto}"></td>
                         <td th:text="${dir.referencia}"></td>
-                        <td th:text="${dir.tipo}"></td>
-                        <td th:text="${dir.predeterminada} ? 'Sí' : 'No'"></td>
-                        <td th:text="${dir.estado} ? 'Activo' : 'Inactivo'"></td>
+                        <td th:text="${dir.distrito}"></td>
+                        <td>
+                            <span class="badge-etiqueta" th:text="${dir.etiqueta}"></span>
+                        </td>
+                        <td th:text="${dir.coordenadasGps}"></td>
+                        <td>
+                            <span th:if="${dir.estado}" class="estado-habilitado">
+                                <i class="bi bi-check-circle-fill"></i> Activo
+                            </span>
+                            <span th:unless="${dir.estado}" class="estado-deshabilitado">
+                                <i class="bi bi-x-circle-fill"></i> Inactivo
+                            </span>
+                        </td>
                         <td>
                             <a th:href="@{/direcciones/actualiza/{id}(id=${dir.id})}" class="btn btn-success btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
@@ -88,8 +127,9 @@
                         <td>
                             <a th:href="@{/direcciones/eliminar/{id}(id=${dir.id})}" 
                                class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Estás seguro de eliminar esta dirección?')">
-                                <i class="bi bi-trash"></i> Eliminar
+                               th:classappend="${!dir.estado} ? 'disabled' : ''"
+                               onclick="return confirm('¿Estás seguro de deshabilitar esta dirección?')">
+                                <i class="bi bi-trash"></i> Deshabilitar
                             </a>
                         </td>
                     </tr>

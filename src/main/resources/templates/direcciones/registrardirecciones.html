@@ -41,7 +41,7 @@
 <body>
     <div class="container py-4">
         <h1 class="page-title">
-            <i class="bi bi-plus-circle"></i> Registro de Dirección
+            <i class="bi bi-plus-circle"></i> Registro de Dirección de Cliente
         </h1>
         <div class="mb-3"></div>
         
@@ -54,15 +54,15 @@
                         <option value="">Seleccione cliente</option>
                         <option th:each="cli : ${listarclientes}" 
                                 th:value="${cli.id}" 
-                                th:text="${cli.nombres} + ' ' + ${cli.apellidos} + ' - ' + ${cli.dni}">
+                                th:text="${cli.nombres} + ' ' + ${cli.apellidos} + ' - ' + ${cli.numeroDocumento}">
                         </option>
                     </select>
                 </div>
 
                 <div class="col-6">
-                    <label for="txtTipo" class="form-label">Tipo de Dirección:</label>
-                    <select class="form-select" id="txtTipo" th:field="*{tipo}">
-                        <option value="">Seleccione tipo</option>
+                    <label for="txtEtiqueta" class="form-label">Etiqueta:</label>
+                    <select class="form-select" id="txtEtiqueta" th:field="*{etiqueta}">
+                        <option value="">Seleccione etiqueta</option>
                         <option value="Casa">Casa</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Otro">Otro</option>
@@ -72,31 +72,32 @@
 
             <div class="row mt-3">
                 <div class="col-12">
-                    <label for="txtDireccion" class="form-label">Dirección:</label>
-                    <textarea class="form-control" id="txtDireccion" rows="2" 
-                              placeholder="Ingresa la dirección completa"
-                              required th:field="*{direccion}"></textarea>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-12">
-                    <label for="txtReferencia" class="form-label">Referencia:</label>
-                    <input type="text" class="form-control" id="txtReferencia" name="txtReferencia"
-                        placeholder="Ingresa una referencia (ej: cerca al parque)" th:field="*{referencia}">
+                    <label for="txtDireccionTexto" class="form-label">Dirección:</label>
+                    <textarea class="form-control" id="txtDireccionTexto" rows="2" 
+                              placeholder="Ingresa la dirección completa (Ej: Av. Los Pinos 123)"
+                              required th:field="*{direccionTexto}"></textarea>
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-6">
-                    <label for="chkPredeterminada" class="form-label">Dirección Predeterminada:</label>
-                    <div class="form-check mt-2">
-                        <input type="checkbox" class="form-check-input" id="chkPredeterminada" 
-                               th:field="*{predeterminada}">
-                        <label class="form-check-label" for="chkPredeterminada">
-                            Marcar como dirección principal
-                        </label>
-                    </div>
+                    <label for="txtReferencia" class="form-label">Referencia:</label>
+                    <input type="text" class="form-control" id="txtReferencia" name="txtReferencia"
+                        placeholder="Ej: Cerca al parque, frente a la tienda" th:field="*{referencia}">
+                </div>
+
+                <div class="col-6">
+                    <label for="txtDistrito" class="form-label">Distrito:</label>
+                    <input type="text" class="form-control" id="txtDistrito" name="txtDistrito"
+                        placeholder="Ej: Cieneguilla, Villa El Salvador" required th:field="*{distrito}">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="txtCoordenadasGps" class="form-label">Coordenadas GPS:</label>
+                    <input type="text" class="form-control" id="txtCoordenadasGps" name="txtCoordenadasGps"
+                        placeholder="Ej: -12.1234, -76.9876" th:field="*{coordenadasGps}">
                 </div>
 
                 <div class="col-6">

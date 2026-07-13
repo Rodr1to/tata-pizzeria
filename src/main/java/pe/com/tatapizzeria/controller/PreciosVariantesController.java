@@ -65,4 +65,22 @@ public class PreciosVariantesController {
         servicio.update(obj, id);
         return "redirect:/variantes/listar";
     }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarVariantes(Model modelo) {
+        modelo.addAttribute("listarvariantes", servicio.findAll());
+        return "variantes/habilitarvariantes";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarVariantes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/variantes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarVariantes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/variantes/habilita";
+    }
 }

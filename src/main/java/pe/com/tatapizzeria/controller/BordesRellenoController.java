@@ -53,4 +53,22 @@ public class BordesRellenoController {
         servicio.update(obj, id);
         return "redirect:/bordes/listar";
     }
+
+    @GetMapping("/habilita")
+    public String MostrarHabilitarBordes(Model modelo) {
+        modelo.addAttribute("listarbordes", servicio.findAll());
+        return "bordes/habilitarbordes";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarBordes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/bordes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarBordes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/bordes/habilita";
+    }
 }

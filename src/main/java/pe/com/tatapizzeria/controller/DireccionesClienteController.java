@@ -59,4 +59,25 @@ public class DireccionesClienteController {
         servicio.update(obj, id);
         return "redirect:/direcciones/listar";
     }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarDirecciones(Model modelo) {
+        modelo.addAttribute("listardirecciones", servicio.findAll());
+        return "direcciones/habilitardirecciones";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarDirecciones(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/direcciones/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarDirecciones(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/direcciones/habilita";
+    }
+    
+    
+    
 }

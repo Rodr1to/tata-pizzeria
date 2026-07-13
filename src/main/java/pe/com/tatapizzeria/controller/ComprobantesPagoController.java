@@ -30,6 +30,13 @@ public class ComprobantesPagoController {
         return "comprobantes/registrarcomprobantes";
     }
 
+    @GetMapping("/actualiza/{id}")
+    public String MostrarActualizarComprobantes(Model modelo, @PathVariable Long id) {
+        modelo.addAttribute("listartipos", servicioTipo.findAllCustom());
+        modelo.addAttribute("comprobantes", servicio.findById(id));
+        return "comprobantes/actualizarcomprobantes";
+    }
+
     @GetMapping("/eliminar/{id}")
     public String EliminarComprobantes(@PathVariable Long id) {
         servicio.delete(id);
@@ -39,5 +46,37 @@ public class ComprobantesPagoController {
     @ModelAttribute("comprobante")
     public ComprobantesPagoEntity ModeloComprobantes() {
         return new ComprobantesPagoEntity();
+    }
+
+    
+    @PostMapping("/registrar")
+    public String RegistrarComprobantes(@ModelAttribute("comprobante") ComprobantesPagoEntity obj) {
+        servicio.add(obj);
+        return "redirect:/comprobantes/listar";
+    }
+
+    @PostMapping("/actualizar/{id}")
+    public String ActualizarComprobantes(@ModelAttribute("comprobante") ComprobantesPagoEntity obj, @PathVariable Long id) {
+        servicio.update(obj, id);
+        return "redirect:/comprobantes/listar";
+    }
+
+
+    @GetMapping("/habilita")
+    public String MostrarHabilitarComprobantes(Model modelo) {
+        modelo.addAttribute("listarcomprobantes", servicio.findAll());
+        return "comprobantes/habilitarcomprobantes";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarComprobantes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/comprobantes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarComprobantes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/comprobantes/habilita";
     }
 }

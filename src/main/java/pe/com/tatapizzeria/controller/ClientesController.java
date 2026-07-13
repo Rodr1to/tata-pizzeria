@@ -43,6 +43,18 @@ public class ClientesController {
         return "redirect:/clientes/listar";
     }
 
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarClientes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/clientes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarClientes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/clientes/habilita";
+    }
+
     @ModelAttribute("cliente")
     public ClientesEntity ModeloClientes() {
         return new ClientesEntity();

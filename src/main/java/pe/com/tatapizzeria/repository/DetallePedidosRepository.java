@@ -9,4 +9,10 @@ public interface DetallePedidosRepository extends JpaRepository<DetallePedidosEn
 
     @Query("SELECT s FROM DetallePedidosEntity s WHERE s.estado = true")
     List<DetallePedidosEntity> findAllCustom();
+    
+    
+    @Query("SELECT d FROM DetallePedidosEntity d WHERE d.pedido.id = ?1 AND d.estado = true")
+    List<DetallePedidosEntity> findByPedidoId(Long idPedido);
+    
+    
 }

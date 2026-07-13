@@ -55,4 +55,9 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
         }
         return null;
     }
+    
+    @Override
+    public List<DetallePedidosEntity> findByPedidoId(Long idPedido) {
+        return repositorio.findByPedidoId(idPedido);
+    }
 }

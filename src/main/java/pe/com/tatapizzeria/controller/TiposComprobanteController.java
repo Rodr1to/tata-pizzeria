@@ -53,4 +53,22 @@ public class TiposComprobanteController {
         servicio.update(obj, id);
         return "redirect:/tiposcomprobante/listar";
     }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarTipos(Model modelo) {
+        modelo.addAttribute("listartipos", servicio.findAll());
+        return "tiposcomprobante/habilitartiposcomprobante";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarTipos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/tiposcomprobante/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarTipos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/tiposcomprobante/habilita";
+    }
 }

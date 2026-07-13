@@ -1,16 +1,151 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>repartidores - actualizar</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tata Pizza | Actualizar Repartidor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-orange: #F15A22;
+            --primary-hover: #D9480F;
+            --cream-bg: #FFF8F3;
+            --text-dark: #2B2B2B;
+            --text-gray: #6B7280;
+        }
+        body {
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .btn-success-custom {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        .btn-success-custom:hover {
+            background-color: #218838;
+            border-color: #218838;
+            color: white;
+        }
+        .page-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>repartidores - actualizar</h1>
-        <a th:href="@{/menuprincipal}">← Volver al Menú</a>
-        <hr>
-        <!-- Contenido aquí -->
+    <div class="container py-4">
+        <h1 class="page-title">
+            <i class="bi bi-pencil-square"></i> Actualización de Repartidor
+        </h1>
+        <div class="mb-3"></div>
+        
+        <form th:action="@{/repartidores/actualizar/{id}(id=*{id})}" method="post" th:object="${repartidores}">
+            
+            <div class="row">
+                <div class="col-2">
+                    <label for="txtCod" class="form-label">ID:</label>
+                    <input type="text" class="form-control" id="txtCod" name="txtCod"
+                        readonly th:field="*{id}">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="txtNombreCompleto" class="form-label">Nombre Completo:</label>
+                    <input type="text" class="form-control" id="txtNombreCompleto" name="txtNombreCompleto"
+                        placeholder="Ingresa el nombre completo" required th:field="*{nombreCompleto}">
+                </div>
+
+                <div class="col-6">
+                    <label for="txtDni" class="form-label">DNI:</label>
+                    <input type="text" class="form-control" id="txtDni" name="txtDni"
+                        placeholder="Ingresa el DNI" required th:field="*{dni}">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label for="txtTelefono" class="form-label">Teléfono:</label>
+                    <input type="text" class="form-control" id="txtTelefono" name="txtTelefono"
+                        placeholder="Ingresa el teléfono" required th:field="*{telefono}">
+                </div>
+
+                <div class="col-4">
+                    <label for="cboSede" class="form-label">Sede:</label>
+                    <select class="form-select" id="cboSede" th:field="*{sede.id}">
+                        <option value="">Seleccione sede</option>
+                        <option th:each="sed : ${listarsedes}" 
+                                th:value="${sed.id}" 
+                                th:text="${sed.nombre}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <label for="txtTipoVehiculo" class="form-label">Tipo de Vehículo:</label>
+                    <select class="form-select" id="txtTipoVehiculo" th:field="*{tipoVehiculo}">
+                        <option value="">Seleccione tipo</option>
+                        <option value="MOTOCICLETA">Motocicleta</option>
+                        <option value="BICICLETA">Bicicleta</option>
+                        <option value="AUTO">Auto</option>
+                        <option value="CAMIONETA">Camioneta</option>
+                        <option value="NINGUNO">Ninguno</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label for="txtPlacaVehiculo" class="form-label">Placa del Vehículo:</label>
+                    <input type="text" class="form-control" id="txtPlacaVehiculo" name="txtPlacaVehiculo"
+                        placeholder="Ej: ABC-123" th:field="*{placaVehiculo}">
+                </div>
+
+                <div class="col-4">
+                    <label for="txtEstadoDisponibilidad" class="form-label">Estado de Disponibilidad:</label>
+                    <select class="form-select" id="txtEstadoDisponibilidad" th:field="*{estadoDisponibilidad}">
+                        <option value="">Seleccione estado</option>
+                        <option value="DISPONIBLE">Disponible</option>
+                        <option value="OCUPADO">Ocupado</option>
+                        <option value="DESCANSO">Descanso</option>
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <label for="chkEst" class="form-label">Estado:</label>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" id="chkEst" 
+                               th:field="*{estado}">
+                        <label class="form-check-label" for="chkEst">
+                            Activo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success-custom">
+                        <i class="bi bi-save"></i> Actualizar
+                    </button>
+                    <a th:href="@{/repartidores/listar}" class="btn btn-dark">
+                        <i class="bi bi-arrow-left"></i> Regresar
+                    </a>
+                </div>
+            </div>
+
+        </form>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
