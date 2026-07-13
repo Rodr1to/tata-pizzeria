@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pe.com.tatapizzeria.entity.RepartidoresEntity;
 import pe.com.tatapizzeria.repository.RepartidoresRepository;
 import pe.com.tatapizzeria.service.RepartidoresService;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,13 +26,18 @@ public class RepartidoresServiceImpl implements RepartidoresService {
     public RepartidoresEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
 
     @Override
-    public RepartidoresEntity add(RepartidoresEntity obj) { return repositorio.save(obj); }
+    public RepartidoresEntity add(RepartidoresEntity obj) {
+        if (obj.getFechaRegistro() == null) {
+            obj.setFechaRegistro(LocalDateTime.now());
+        }
+        return repositorio.save(obj);
+    }
 
     @Override
     public RepartidoresEntity update(RepartidoresEntity obj, Long id) {
         RepartidoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
-            BeanUtils.copyProperties(obj, actual, "codigo");
+            BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
             return repositorio.save(actual);
         }
         return null;

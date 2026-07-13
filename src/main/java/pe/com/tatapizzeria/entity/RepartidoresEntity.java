@@ -3,6 +3,7 @@ package pe.com.tatapizzeria.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import lombok.*;
 
 @NoArgsConstructor
@@ -44,6 +45,7 @@ public class RepartidoresEntity implements Serializable {
     @Column(name = "estado", nullable = false)
     private Boolean estado;
 
-    @Column(name = "fecha_registro")
+    @CreationTimestamp
+    @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;
 }
