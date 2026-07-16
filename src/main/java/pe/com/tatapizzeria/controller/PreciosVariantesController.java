@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.PreciosVariantesEntity;
+import pe.com.tatapizzeria.entity.ProductosEntity;
 import pe.com.tatapizzeria.service.PreciosVariantesService;
 import pe.com.tatapizzeria.service.ProductosService;
 import pe.com.tatapizzeria.service.TamanosService;
@@ -51,9 +52,13 @@ public class PreciosVariantesController {
 
     @ModelAttribute("variante")
     public PreciosVariantesEntity ModeloVariantes() {
-        return new PreciosVariantesEntity();
+    	
+    	PreciosVariantesEntity precio  = new PreciosVariantesEntity();
+    	precio.setEstado(true); 
+        return precio;
     }
 
+    
     @PostMapping("/registrar")
     public String RegistrarVariantes(@ModelAttribute("variante") PreciosVariantesEntity obj) {
         servicio.add(obj);

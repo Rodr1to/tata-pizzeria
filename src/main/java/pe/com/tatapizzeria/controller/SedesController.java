@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.EmpleadosEntity;
 import pe.com.tatapizzeria.entity.SedesEntity;
 import pe.com.tatapizzeria.service.SedesService;
 
@@ -57,7 +59,13 @@ public class SedesController {
 
     @ModelAttribute("sede")
     public SedesEntity ModeloSedes() {
-        return new SedesEntity();
+
+        SedesEntity sede = new SedesEntity();
+        sede.setEstado(true); 
+    	
+        return sede;
+        
+        
     }
 
     @PostMapping("/registrar")

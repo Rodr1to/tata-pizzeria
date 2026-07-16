@@ -55,9 +55,12 @@ public class ClientesController {
         return "redirect:/clientes/habilita";
     }
 
+    // ModelAttribute con estado activo por defecto
     @ModelAttribute("cliente")
     public ClientesEntity ModeloClientes() {
-        return new ClientesEntity();
+        ClientesEntity cliente = new ClientesEntity();
+        cliente.setEstado(true); 
+        return cliente;
     }
 
     @PostMapping("/registrar")

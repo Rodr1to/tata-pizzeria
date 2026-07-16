@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.CategoriasProductoEntity;
 import pe.com.tatapizzeria.entity.TamanosEntity;
 import pe.com.tatapizzeria.service.TamanosService;
 
@@ -39,8 +41,21 @@ public class TamanosController {
 
     @ModelAttribute("tamano")
     public TamanosEntity ModeloTamanos() {
-        return new TamanosEntity();
+    	
+    	TamanosEntity tamano = new TamanosEntity();
+    	tamano.setEstado(true); 
+        return tamano;
+          
+          
     }
+    
+    @ModelAttribute("categoria")
+    public CategoriasProductoEntity ModeloCategorias() {
+        CategoriasProductoEntity categoria = new CategoriasProductoEntity();
+        categoria.setEstado(true); 
+        return categoria;
+    }
+    
 
     @PostMapping("/registrar")
     public String RegistrarTamanos(@ModelAttribute("tamano") TamanosEntity obj) {

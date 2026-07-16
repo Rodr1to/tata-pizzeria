@@ -12,4 +12,6 @@ public interface DireccionesClienteService {
     DireccionesClienteEntity delete(Long id);
     DireccionesClienteEntity enable(Long id);
     
+    List<DireccionesClienteEntity> findByClienteId(Long idCliente);
+
 }

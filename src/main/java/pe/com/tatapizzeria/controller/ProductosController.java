@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.BordesRellenoEntity;
 import pe.com.tatapizzeria.entity.ProductosEntity;
 import pe.com.tatapizzeria.service.ProductosService;
 import pe.com.tatapizzeria.service.CategoriasProductoService;
@@ -45,8 +47,11 @@ public class ProductosController {
 
     @ModelAttribute("producto")
     public ProductosEntity ModeloProductos() {
-        return new ProductosEntity();
+    	ProductosEntity producto  = new ProductosEntity();
+    	producto.setEstado(true); 
+        return producto;
     }
+       
 
     @PostMapping("/registrar")
     public String RegistrarProductos(@ModelAttribute("producto") ProductosEntity obj) {

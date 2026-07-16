@@ -75,6 +75,17 @@
                     <input type="text" class="form-control" id="txtCod" name="txtCod"
                         readonly th:field="*{id}">
                 </div>
+
+                <!-- Campo oculto para mantener la fecha -->
+                <input type="hidden" th:field="*{fechaHoraPedido}" />
+
+                <!-- Fecha en modo SOLO LECTURA (solo para mostrar) -->
+                <div class="col-4">
+                    <label for="txtFechaHoraPedido" class="form-label">Fecha y Hora:</label>
+                    <input type="text" class="form-control" id="txtFechaHoraPedido" 
+                           th:value="${pedidos.fechaHoraPedido}" 
+                           readonly>
+                </div>
             </div>
 
             <div class="row mt-3">
@@ -114,14 +125,8 @@
 
             <div class="row mt-3">
                 <div class="col-4">
-                    <label for="txtFechaHoraPedido" class="form-label">Fecha y Hora:</label>
-                    <input type="datetime-local" class="form-control" id="txtFechaHoraPedido" 
-                        th:value="${pedidos.fechaHoraPedido}" 
-                        required>
-                </div>
-                <div class="col-4">
                     <label for="txtTipoEntrega" class="form-label">Tipo de Entrega:</label>
-                    <select class="form-select" id="txtTipoEntrega" th:field="*{tipoEntrega}" required>
+                    <select class="form-select" id="txtTipoEntrega" th:field="*{tipoEntrega}" required onchange="actualizarDelivery()">
                         <option value="">Seleccione tipo</option>
                         <option value="DELIVERY">Delivery</option>
                         <option value="RECOJO">Recojo en tienda</option>
@@ -140,50 +145,8 @@
                         <option value="DELIVERY">Delivery</option>
                     </select>
                 </div>
-            </div>
 
-            <div class="row mt-3">
-                <div class="col-12">
-                    <label for="txtObservaciones" class="form-label">Observaciones:</label>
-                    <textarea class="form-control" id="txtObservaciones" rows="2" 
-                              placeholder="Ingresa observaciones adicionales" th:field="*{observaciones}"></textarea>
-                </div>
-            </div>
-
-            <!-- Sección de montos (solo lectura) -->
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="info-box">
-                        <div class="row">
-                            <div class="col-md-4 text-center">
-                                <div class="label">Subtotal</div>
-                                <div class="value" th:text="'S/ ' + ${pedidos.montoSubtotal}"></div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="label">Costo Delivery</div>
-                                <div class="value" th:text="'S/ ' + ${pedidos.costoDelivery}"></div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="label">Total</div>
-                                <div class="value total" th:text="'S/ ' + ${pedidos.montoTotal}"></div>
-                            </div>
-                        </div>
-                        <div class="text-center mt-2">
-                            <small class="text-muted">
-                                <i class="bi bi-info-circle"></i> Los montos se calculan automáticamente con los productos agregados
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Campos ocultos para mantener los valores -->
-            <input type="hidden" th:field="*{montoSubtotal}" />
-            <input type="hidden" th:field="*{costoDelivery}" />
-            <input type="hidden" th:field="*{montoTotal}" />
-
-            <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-4">
                     <label for="chkEst" class="form-label">Estado:</label>
                     <div class="form-check mt-2">
                         <input type="checkbox" class="form-check-input" id="chkEst" 
@@ -194,6 +157,46 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="txtObservaciones" class="form-label">Observaciones:</label>
+                    <textarea class="form-control" id="txtObservaciones" rows="2" 
+                              placeholder="Ingresa observaciones adicionales" th:field="*{observaciones}"></textarea>
+                </div>
+            </div>
+
+            <!-- Sección de montos (actualizable) -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="info-box">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <div class="label">Subtotal</div>
+                                <div class="value" id="subtotalDisplay" th:text="'S/ ' + ${pedidos.montoSubtotal}"></div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="label">Costo Delivery</div>
+                                <div class="value" id="deliveryDisplay" th:text="'S/ ' + ${pedidos.costoDelivery}"></div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="label">Total</div>
+                                <div class="value total" id="totalDisplay" th:text="'S/ ' + ${pedidos.montoTotal}"></div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle"></i> El costo de delivery se actualiza al cambiar el tipo de entrega
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campos ocultos para mantener los valores -->
+            <input type="hidden" th:field="*{montoSubtotal}" id="montoSubtotal" />
+            <input type="hidden" th:field="*{costoDelivery}" id="costoDelivery" />
+            <input type="hidden" th:field="*{montoTotal}" id="montoTotal" />
 
             <div class="row mt-4">
                 <div class="col-12">
@@ -208,6 +211,58 @@
 
         </form>
     </div>
+    
+    <script>
+        function actualizarDelivery() {
+            const tipoEntrega = document.getElementById('txtTipoEntrega').value;
+            const deliveryInput = document.getElementById('costoDelivery');
+            const deliveryDisplay = document.getElementById('deliveryDisplay');
+            const totalInput = document.getElementById('montoTotal');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const subtotalInput = document.getElementById('montoSubtotal');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+
+            let costoDelivery = 0;
+            if (tipoEntrega === 'DELIVERY') {
+                costoDelivery = 5.00;
+            } else if (tipoEntrega === 'RECOJO' || tipoEntrega === 'SALON') {
+                costoDelivery = 0.00;
+            }
+
+            const subtotal = parseFloat(subtotalInput.value) || 0;
+            const total = subtotal + costoDelivery;
+
+            deliveryInput.value = costoDelivery.toFixed(2);
+            deliveryDisplay.textContent = 'S/ ' + costoDelivery.toFixed(2);
+
+            totalInput.value = total.toFixed(2);
+            totalDisplay.textContent = 'S/ ' + total.toFixed(2);
+
+            subtotalDisplay.textContent = 'S/ ' + subtotal.toFixed(2);
+        }
+
+        function actualizarSubtotal(nuevoSubtotal) {
+            const subtotalInput = document.getElementById('montoSubtotal');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+            const totalInput = document.getElementById('montoTotal');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const deliveryInput = document.getElementById('costoDelivery');
+
+            const subtotal = parseFloat(nuevoSubtotal) || 0;
+            const costoDelivery = parseFloat(deliveryInput.value) || 0;
+            const total = subtotal + costoDelivery;
+
+            subtotalInput.value = subtotal.toFixed(2);
+            subtotalDisplay.textContent = 'S/ ' + subtotal.toFixed(2);
+            
+            totalInput.value = total.toFixed(2);
+            totalDisplay.textContent = 'S/ ' + total.toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarDelivery();
+        });
+    </script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

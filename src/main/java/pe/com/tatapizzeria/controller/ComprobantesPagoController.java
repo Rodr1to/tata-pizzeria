@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.ComprobantesPagoEntity;
+import pe.com.tatapizzeria.entity.DireccionesClienteEntity;
 import pe.com.tatapizzeria.service.ComprobantesPagoService;
 import pe.com.tatapizzeria.service.TiposComprobanteService;
 
@@ -45,8 +46,14 @@ public class ComprobantesPagoController {
 
     @ModelAttribute("comprobante")
     public ComprobantesPagoEntity ModeloComprobantes() {
-        return new ComprobantesPagoEntity();
+    	
+    	ComprobantesPagoEntity comprobante  =  new ComprobantesPagoEntity();
+    	comprobante.setEstado(true); 
+  
+        return comprobante;
     }
+    
+
 
     
     @PostMapping("/registrar")

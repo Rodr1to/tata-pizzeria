@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.ProveedoresEntity;
+import pe.com.tatapizzeria.entity.RepartidoresEntity;
 import pe.com.tatapizzeria.service.ProveedoresService;
 
 @Controller
@@ -57,7 +58,12 @@ public class ProveedoresController {
 
     @ModelAttribute("proveedor")
     public ProveedoresEntity ModeloProveedores() {
-        return new ProveedoresEntity();
+
+        ProveedoresEntity provedor = new ProveedoresEntity();
+        provedor.setEstado(true); 
+        return provedor;
+        
+        
     }
 
     @PostMapping("/registrar")

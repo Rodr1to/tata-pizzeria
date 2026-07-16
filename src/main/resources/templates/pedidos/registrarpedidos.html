@@ -101,17 +101,12 @@
                 </div>
             </div>
 
+            <!-- ELIMINADO: Campo de fecha y hora -->
+
             <div class="row mt-3">
                 <div class="col-4">
-                    <label for="txtFechaHoraPedido" class="form-label">Fecha y Hora:</label>
-                    <input type="datetime-local" class="form-control" id="txtFechaHoraPedido" name="fechaHoraPedido"
-                    th:field="*{fechaHoraPedido}" 
-                    required>
-                </div>
-
-                <div class="col-4">
                     <label for="txtTipoEntrega" class="form-label">Tipo de Entrega:</label>
-                    <select class="form-select" id="txtTipoEntrega" th:field="*{tipoEntrega}" required>
+                    <select class="form-select" id="txtTipoEntrega" th:field="*{tipoEntrega}" required onchange="actualizarDelivery()">
                         <option value="">Seleccione tipo</option>
                         <option value="DELIVERY">Delivery</option>
                         <option value="RECOJO">Recojo en tienda</option>
@@ -130,6 +125,17 @@
                         <option value="DELIVERY">Delivery</option>
                     </select>
                 </div>
+
+                <div class="col-4">
+                    <label for="chkEst" class="form-label">Estado:</label>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" id="chkEst" 
+                               th:field="*{estado}">
+                        <label class="form-check-label" for="chkEst">
+                            Activo
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="row mt-3">
@@ -140,7 +146,7 @@
                 </div>
             </div>
 
-            <!-- 🔥 Sección de montos (calculados automáticamente) -->
+            <!-- Sección de montos (calculados automáticamente) -->
             <div class="row mt-3">
                 <div class="col-12">
                     <div class="info-box">
@@ -160,30 +166,17 @@
                         </div>
                         <div class="text-center mt-2">
                             <small class="text-muted">
-                                <i class="bi bi-info-circle"></i> Los montos se calcularán automáticamente al agregar productos
+                                <i class="bi bi-info-circle"></i> Los montos se calcularán automáticamente
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 🔥 Campos ocultos para enviar los valores al backend -->
+            <!-- Campos ocultos para enviar los valores al backend -->
             <input type="hidden" th:field="*{montoSubtotal}" id="montoSubtotal" />
             <input type="hidden" th:field="*{costoDelivery}" id="costoDelivery" />
             <input type="hidden" th:field="*{montoTotal}" id="montoTotal" />
-
-            <div class="row mt-3">
-                <div class="col-6">
-                    <label for="chkEst" class="form-label">Estado:</label>
-                    <div class="form-check mt-2">
-                        <input type="checkbox" class="form-check-input" id="chkEst" 
-                               th:field="*{estado}">
-                        <label class="form-check-label" for="chkEst">
-                            Activo
-                        </label>
-                    </div>
-                </div>
-            </div>
 
             <div class="row mt-4">
                 <div class="col-12">
@@ -200,9 +193,53 @@
     </div>
     
     <script>
-        // Inicializar valores por defecto
+        function actualizarDelivery() {
+            const tipoEntrega = document.getElementById('txtTipoEntrega').value;
+            const deliveryInput = document.getElementById('costoDelivery');
+            const deliveryDisplay = document.getElementById('deliveryDisplay');
+            const totalInput = document.getElementById('montoTotal');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const subtotalInput = document.getElementById('montoSubtotal');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+
+            let costoDelivery = 0;
+            if (tipoEntrega === 'DELIVERY') {
+                costoDelivery = 5.00;
+            } else if (tipoEntrega === 'RECOJO' || tipoEntrega === 'SALON') {
+                costoDelivery = 0.00;
+            }
+
+            const subtotal = parseFloat(subtotalInput.value) || 0;
+            const total = subtotal + costoDelivery;
+
+            deliveryInput.value = costoDelivery.toFixed(2);
+            deliveryDisplay.textContent = 'S/ ' + costoDelivery.toFixed(2);
+
+            totalInput.value = total.toFixed(2);
+            totalDisplay.textContent = 'S/ ' + total.toFixed(2);
+
+            subtotalDisplay.textContent = 'S/ ' + subtotal.toFixed(2);
+        }
+
+        function actualizarSubtotal(nuevoSubtotal) {
+            const subtotalInput = document.getElementById('montoSubtotal');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+            const totalInput = document.getElementById('montoTotal');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const deliveryInput = document.getElementById('costoDelivery');
+
+            const subtotal = parseFloat(nuevoSubtotal) || 0;
+            const costoDelivery = parseFloat(deliveryInput.value) || 0;
+            const total = subtotal + costoDelivery;
+
+            subtotalInput.value = subtotal.toFixed(2);
+            subtotalDisplay.textContent = 'S/ ' + subtotal.toFixed(2);
+            
+            totalInput.value = total.toFixed(2);
+            totalDisplay.textContent = 'S/ ' + total.toFixed(2);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Si hay valores precargados, mostrarlos
             const subtotal = parseFloat(document.getElementById('montoSubtotal').value) || 0;
             const delivery = parseFloat(document.getElementById('costoDelivery').value) || 0;
             const total = parseFloat(document.getElementById('montoTotal').value) || 0;
@@ -210,6 +247,8 @@
             document.getElementById('subtotalDisplay').textContent = 'S/ ' + subtotal.toFixed(2);
             document.getElementById('deliveryDisplay').textContent = 'S/ ' + delivery.toFixed(2);
             document.getElementById('totalDisplay').textContent = 'S/ ' + total.toFixed(2);
+
+            actualizarDelivery();
         });
     </script>
     

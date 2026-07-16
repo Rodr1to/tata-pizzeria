@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.ComprobantesPagoEntity;
 import pe.com.tatapizzeria.entity.TiposComprobanteEntity;
 import pe.com.tatapizzeria.service.TiposComprobanteService;
 
@@ -37,9 +39,15 @@ public class TiposComprobanteController {
         return "redirect:/tiposcomprobante/listar";
     }
 
+    
     @ModelAttribute("tipo")
     public TiposComprobanteEntity ModeloTipos() {
-        return new TiposComprobanteEntity();
+    	
+    	TiposComprobanteEntity tipocomprobante = new TiposComprobanteEntity();
+    	tipocomprobante.setEstado(true); 
+    	
+        return tipocomprobante;
+        
     }
 
     @PostMapping("/registrar")

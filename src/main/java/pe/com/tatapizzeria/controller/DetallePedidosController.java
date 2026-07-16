@@ -8,6 +8,7 @@ import pe.com.tatapizzeria.entity.DetallePedidosEntity;
 import pe.com.tatapizzeria.service.DetallePedidosService;
 import pe.com.tatapizzeria.service.PreciosVariantesService;
 import pe.com.tatapizzeria.service.BordesRellenoService;
+import pe.com.tatapizzeria.service.PedidosService;
 
 @Controller
 @RequestMapping("/detalles")
@@ -22,6 +23,9 @@ public class DetallePedidosController {
     @Autowired
     private BordesRellenoService servicioBorde;
 
+    @Autowired
+    private PedidosService servicioPedido; 
+
     @GetMapping("/listar")
     public String MostrarListarDetalles(Model modelo) {
         modelo.addAttribute("listardetalles", servicio.findAllCustom());
@@ -35,7 +39,6 @@ public class DetallePedidosController {
         return "detalles/registrardetalles";
     }
 
-    // 🔥 NUEVO MÉTODO: Registrar detalle con pedido preseleccionado
     @GetMapping("/registroConPedido/{idPedido}")
     public String MostrarRegistrarDetallesConPedido(Model modelo, @PathVariable Long idPedido) {
         modelo.addAttribute("idPedidoSeleccionado", idPedido);
@@ -54,13 +57,19 @@ public class DetallePedidosController {
 
     @GetMapping("/eliminar/{id}")
     public String EliminarDetalles(@PathVariable Long id) {
+        var detalle = servicio.findById(id);
+        Long idPedido = detalle.getPedido().getId();
         servicio.delete(id);
-        return "redirect:/detalles/listar";
+        // Recalcular montos después de eliminar
+        servicioPedido.recalcularMontos(idPedido);
+        return "redirect:/pedidos/detalles/" + idPedido;
     }
 
     @ModelAttribute("detalle")
     public DetallePedidosEntity ModeloDetalles() {
-        return new DetallePedidosEntity();
+        DetallePedidosEntity detalle = new DetallePedidosEntity();
+        detalle.setEstado(true);
+        return detalle;
     }
 
     @PostMapping("/registrar")

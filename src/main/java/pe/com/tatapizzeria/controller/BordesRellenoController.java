@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.BordesRellenoEntity;
+import pe.com.tatapizzeria.entity.TamanosEntity;
 import pe.com.tatapizzeria.service.BordesRellenoService;
 
 @Controller
@@ -39,9 +40,14 @@ public class BordesRellenoController {
 
     @ModelAttribute("borde")
     public BordesRellenoEntity ModeloBordes() {
-        return new BordesRellenoEntity();
+    	
+    	BordesRellenoEntity borde  = new BordesRellenoEntity();
+    	borde.setEstado(true); 
+        return borde;
+    	
     }
 
+    
     @PostMapping("/registrar")
     public String RegistrarBordes(@ModelAttribute("borde") BordesRellenoEntity obj) {
         servicio.add(obj);

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.EmpleadosEntity;
+import pe.com.tatapizzeria.entity.TiposComprobanteEntity;
 import pe.com.tatapizzeria.service.EmpleadosService;
 import pe.com.tatapizzeria.service.SedesService;
 
@@ -63,7 +64,11 @@ public class EmpleadosController {
 
     @ModelAttribute("empleado")
     public EmpleadosEntity ModeloEmpleados() {
-        return new EmpleadosEntity();
+        
+        EmpleadosEntity empleado = new EmpleadosEntity();
+        empleado.setEstado(true); 
+    	
+        return empleado;
     }
 
     @PostMapping("/registrar")

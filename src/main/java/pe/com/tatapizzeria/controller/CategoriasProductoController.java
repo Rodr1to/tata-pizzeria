@@ -39,7 +39,9 @@ public class CategoriasProductoController {
 
     @ModelAttribute("categoria")
     public CategoriasProductoEntity ModeloCategorias() {
-        return new CategoriasProductoEntity();
+        CategoriasProductoEntity categoria = new CategoriasProductoEntity();
+        categoria.setEstado(true); 
+        return categoria;
     }
 
     @PostMapping("/registrar")

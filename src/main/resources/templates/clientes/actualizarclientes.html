@@ -35,6 +35,9 @@
             color: var(--primary-orange);
             font-weight: 700;
         }
+        .form-control[readonly] {
+            background-color: #e9ecef;
+        }
     </style>
 </head>
 
@@ -53,6 +56,17 @@
                     <input type="text" class="form-control" id="txtCod" name="txtCod"
                         readonly th:field="*{id}">
                 </div>
+
+                <!-- Fecha de registro (solo lectura) -->
+                <div class="col-4">
+                    <label for="txtFechaRegistro" class="form-label">Fecha de Registro:</label>
+                    <input type="text" class="form-control" id="txtFechaRegistro" 
+                           th:value="${clientes.fechaRegistro}" 
+                           readonly>
+                </div>
+
+                <!-- Campo oculto para mantener la fecha -->
+                <input type="hidden" th:field="*{fechaRegistro}" />
             </div>
 
             <div class="row mt-3">
@@ -132,20 +146,16 @@
 
         </form>
 
-        <!-- Después del formulario -->
+        <!-- Botón para gestionar direcciones -->
         <div class="row mt-4">
             <div class="col-12">
                 <a th:href="@{/direcciones/listarPorCliente/{id}(id=*{id})}" 
-                class="btn btn-outline-primary">
+                   class="btn btn-primary">
                     <i class="bi bi-geo-alt"></i> Gestionar Direcciones de este Cliente
                 </a>
             </div>
         </div>
-
-        
     </div>
-
-
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.CombosPromocionesEntity;
+import pe.com.tatapizzeria.entity.PreciosVariantesEntity;
 import pe.com.tatapizzeria.service.CombosPromocionesService;
 
 @Controller
@@ -39,7 +40,10 @@ public class CombosPromocionesController {
 
     @ModelAttribute("combo")
     public CombosPromocionesEntity ModeloCombos() {
-        return new CombosPromocionesEntity();
+    	
+    	CombosPromocionesEntity combo  = new CombosPromocionesEntity();
+    	combo.setEstado(true); 
+        return combo;
     }
 
     @PostMapping("/registrar")

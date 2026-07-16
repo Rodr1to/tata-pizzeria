@@ -44,7 +44,7 @@ public class PedidosController {
     public String MostrarActualizarPedidos(Model modelo, @PathVariable Long id) {
         modelo.addAttribute("listarclientes", servicioCli.findAllCustom());
         modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
-        modelo.addAttribute("listarusuarios", servicioUsu.findAllCustom()); // ✅ AGREGADO
+        modelo.addAttribute("listarusuarios", servicioUsu.findAllCustom()); 
         modelo.addAttribute("pedidos", servicio.findById(id));
         return "pedidos/actualizarpedidos";
     }
