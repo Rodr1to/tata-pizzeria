@@ -36,7 +36,6 @@ public class ClientesServiceImpl implements ClientesService {
     public ClientesEntity update(ClientesEntity obj, Long id) {
         ClientesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
-            // Copiar propiedades EXCEPTO 'id' y 'fechaRegistro'
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
             return repositorio.save(actual);
         }

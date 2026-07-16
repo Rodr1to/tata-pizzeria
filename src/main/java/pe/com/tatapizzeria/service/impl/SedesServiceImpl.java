@@ -30,7 +30,7 @@ public class SedesServiceImpl implements SedesService {
     public SedesEntity update(SedesEntity obj, Long id) {
         SedesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
-            BeanUtils.copyProperties(obj, actual, "codigo");
+            BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
             return repositorio.save(actual);
         }
         return null;

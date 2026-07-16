@@ -30,7 +30,7 @@ public class ProveedoresServiceImpl implements ProveedoresService {
     public ProveedoresEntity update(ProveedoresEntity obj, Long id) {
         ProveedoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
-            BeanUtils.copyProperties(obj, actual, "codigo");
+            BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
             return repositorio.save(actual);
         }
         return null;

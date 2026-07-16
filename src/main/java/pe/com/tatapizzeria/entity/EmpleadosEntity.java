@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,6 +45,7 @@ public class EmpleadosEntity implements Serializable {
     @Column(name = "estado", nullable = false)
     private Boolean estado;
 
-    @Column(name = "fecha_registro")
+    @CreationTimestamp
+    @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;
 }
