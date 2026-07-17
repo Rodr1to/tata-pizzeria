@@ -15,4 +15,9 @@ public class InicioController {
     public String MostrarMenuPrincipal() {
         return "menuprincipal";
     }
+    
+    @GetMapping("/login")
+    public String MostrarLogin() {
+        return "login";
+    }
 }

@@ -39,52 +39,26 @@
             color: var(--primary-orange);
             font-weight: 700;
         }
-        .estado-pendiente {
-            background-color: #f0ad4e;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-        }
-        .estado-en-preparacion {
-            background-color: #5bc0de;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-        }
-        .estado-en-camino {
-            background-color: #5bc0de;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-        }
-        .estado-entregado {
-            background-color: #28a745;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-        }
-        .estado-cancelado {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-        }
         .badge-custom {
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            display: inline-block;
         }
         .badge-pendiente {
             background-color: #f0ad4e;
             color: white;
         }
+        .badge-recibido {
+            background-color: #5bc0de;
+            color: white;
+        }
         .badge-en-preparacion {
+            background-color: #5bc0de;
+            color: white;
+        }
+        .badge-listo {
             background-color: #5bc0de;
             color: white;
         }
@@ -100,6 +74,37 @@
             background-color: #dc3545;
             color: white;
         }
+        .estado-habilitado {
+            color: #28a745;
+            font-weight: 600;
+        }
+        .estado-deshabilitado {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        .filtro-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .card-stats {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .card-stats .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+        .card-stats .stat-label {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 
@@ -108,33 +113,88 @@
         <h1 class="page-title">
             <i class="bi bi-clock-history"></i> Historial de Estados de Pedidos
         </h1>
+        <p class="text-muted">Último estado registrado de cada pedido</p>
+        
         <div class="mb-3">
             <a th:href="@{/menuprincipal}" class="btn btn-dark">
-                <i class="bi bi-arrow-left"></i> Regresar
+                <i class="bi bi-arrow-left"></i> Regresar al Menú
             </a>
+            <button class="btn btn-outline-secondary" onclick="window.location.reload()">
+                <i class="bi bi-arrow-clockwise"></i> Actualizar
+            </button>
+        </div>
+
+        <!-- Estadísticas rápidas -->
+        <div class="row card-stats g-3 mb-4">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="stat-number" th:text="${#lists.size(listarhistorial)}">0</div>
+                    <div class="stat-label">Total Pedidos</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="stat-number" style="color: #28a745;" 
+                         th:text="${#lists.size(listarhistorial.?[estado == 'ENTREGADO'])}">0</div>
+                    <div class="stat-label">Entregados</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="stat-number" style="color: #f0ad4e;" 
+                         th:text="${#lists.size(listarhistorial.?[estado == 'PENDIENTE'])}">0</div>
+                    <div class="stat-label">Pendientes</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <div class="stat-number" style="color: #dc3545;" 
+                         th:text="${#lists.size(listarhistorial.?[estado == 'CANCELADO'])}">0</div>
+                    <div class="stat-label">Cancelados</div>
+                </div>
+            </div>
         </div>
 
         <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover table-bordered" id="tablaHistorial">
                 <thead class="table-dark-custom">
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">#</th>
                         <th scope="col">Pedido</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Fecha y Hora</th>
-                        <th scope="col">Usuario que Cambió</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Sede</th>
+                        <th scope="col">Estado Actual</th>
+                        <th scope="col">Última Actualización</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="hist : ${listarhistorial}">
                         <th scope="row" th:text="${hist.id}"></th>
-                        <td th:text="'#' + ${hist.pedido.id}"></td>
                         <td>
+                            <span class="fw-bold">#<span th:text="${hist.pedido.id}"></span></span>
+                        </td>
+                        <td>
+                            <span th:text="${hist.pedido.cliente.nombres} + ' ' + ${hist.pedido.cliente.apellidos}"></span>
+                            <br>
+                            <small class="text-muted" th:text="${hist.pedido.cliente.telefonoWhatsapp}"></small>
+                        </td>
+                        <td th:text="${hist.pedido.sede.nombre}"></td>
+                        <td>
+                            <!-- Estados del pedido -->
                             <span th:if="${hist.estado == 'PENDIENTE'}" class="badge-custom badge-pendiente">
                                 <i class="bi bi-clock-fill"></i> Pendiente
                             </span>
+                            <span th:if="${hist.estado == 'RECIBIDO'}" class="badge-custom badge-recibido">
+                                <i class="bi bi-box-arrow-in-right"></i> Recibido
+                            </span>
                             <span th:if="${hist.estado == 'EN_PREPARACION'}" class="badge-custom badge-en-preparacion">
                                 <i class="bi bi-arrow-repeat"></i> En Preparación
+                            </span>
+                            <span th:if="${hist.estado == 'LISTO'}" class="badge-custom badge-listo">
+                                <i class="bi bi-check-circle"></i> Listo
                             </span>
                             <span th:if="${hist.estado == 'EN_CAMINO'}" class="badge-custom badge-en-camino">
                                 <i class="bi bi-truck"></i> En Camino
@@ -145,24 +205,43 @@
                             <span th:if="${hist.estado == 'CANCELADO'}" class="badge-custom badge-cancelado">
                                 <i class="bi bi-x-circle-fill"></i> Cancelado
                             </span>
-                            <span th:if="${hist.estado == 'RECIBIDO'}" class="badge-custom badge-en-preparacion">
-                                <i class="bi bi-box-arrow-in-right"></i> Recibido
-                            </span>
-                            <span th:if="${hist.estado == 'LISTO'}" class="badge-custom badge-en-camino">
-                                <i class="bi bi-check-circle"></i> Listo
+                            <!-- Si no coincide con ningún estado conocido -->
+                            <span th:if="${hist.estado != 'PENDIENTE' and hist.estado != 'RECIBIDO' and hist.estado != 'EN_PREPARACION' and hist.estado != 'LISTO' and hist.estado != 'EN_CAMINO' and hist.estado != 'ENTREGADO' and hist.estado != 'CANCELADO'}" 
+                                  class="badge-custom" style="background-color: #6c757d; color: white;">
+                                <i class="bi bi-question-circle"></i> <span th:text="${hist.estado}"></span>
                             </span>
                         </td>
                         <td th:text="${hist.fechaHoraCambio}"></td>
                         <td th:text="${hist.usuarioCambio.empleado.nombres} + ' ' + ${hist.usuarioCambio.empleado.apellidos}"></td>
+                        <td th:text="'S/ ' + ${hist.pedido.montoTotal}"></td>
+                        <td>
+                            <a th:href="@{/historial/pedido/{id}(id=${hist.pedido.id})}" 
+                               class="btn btn-info btn-sm" title="Ver historial completo">
+                                <i class="bi bi-clock-history"></i>
+                            </a>
+                            <a th:href="@{/pedidos/detalles/{id}(id=${hist.pedido.id})}" 
+                               class="btn btn-primary btn-sm" title="Ver pedido">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Mensaje cuando no hay registros -->
+                    <tr th:if="${listarhistorial.isEmpty()}">
+                        <td colspan="9" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox" style="font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+                            No hay registros de historial de pedidos
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <!-- Nota informativa -->
         <div class="alert alert-info mt-3">
             <i class="bi bi-info-circle"></i>
-            <strong>Nota:</strong> Este módulo muestra el historial de cambios de estado de los pedidos. 
-            Los registros son creados automáticamente por el sistema.
+            <strong>Nota:</strong> Esta vista muestra el <strong>último estado registrado</strong> de cada pedido. 
+            Para ver el historial completo de cambios de un pedido, haz clic en el botón 
+            <i class="bi bi-clock-history"></i>.
         </div>
     </div>
     

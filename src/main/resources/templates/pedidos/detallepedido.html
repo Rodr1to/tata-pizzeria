@@ -109,18 +109,59 @@
             </div>
         </div>
 
-        <!-- Botones de acción -->
-        <div class="mb-3">
-            <a th:href="@{/detalles/registroConPedido/{id}(id=${pedido.id})}" class="btn btn-primary-custom">
-                <i class="bi bi-plus-circle"></i> Agregar Producto
-            </a>
-            <a th:href="@{/pedidos/actualiza/{id}(id=${pedido.id})}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar Pedido
-            </a>
-            <a th:href="@{/pedidos/listar}" class="btn btn-dark">
-                <i class="bi bi-arrow-left"></i> Volver a Pedidos
-            </a>
-        </div>
+       <!-- Botones de acción organizados -->
+<div class="mb-4">
+    <!-- Grupo 1: Acciones principales del pedido -->
+    <div class="d-flex flex-wrap gap-2 mb-2">
+        <h6 class="w-100 text-muted small mb-1">
+            <i class="bi bi-gear"></i> Acciones del Pedido
+        </h6>
+        <a th:href="@{/estados/cambiar/{id}(id=${pedido.id})}" class="btn btn-primary">
+            <i class="bi bi-arrow-repeat"></i> Cambiar Estado
+        </a>
+        <a th:href="@{/pedidos/actualiza/{id}(id=${pedido.id})}" class="btn btn-warning">
+            <i class="bi bi-pencil"></i> Editar Pedido
+        </a>
+        <a th:href="@{/historial/pedido/{id}(id=${pedido.id})}" class="btn btn-info">
+            <i class="bi bi-clock-history"></i> Historial
+        </a>
+
+        <!-- Botones de acción - Agregar este botón -->
+        <a th:href="@{/comprobantes/registroConPedido/{id}(id=${pedido.id})}" class="btn btn-success">
+            <i class="bi bi-credit-card"></i> Pagar
+        </a>
+
+    </div>
+
+    <!-- Separador visual -->
+    <hr class="my-2">
+
+    <!-- Grupo 2: Gestión de productos -->
+    <div class="d-flex flex-wrap gap-2 mb-2">
+        <h6 class="w-100 text-muted small mb-1">
+            <i class="bi bi-box-seam"></i> Productos
+        </h6>
+        <a th:href="@{/detalles/registroConPedido/{id}(id=${pedido.id})}" class="btn btn-primary-custom">
+            <i class="bi bi-plus-circle"></i> Agregar Producto
+        </a>
+    </div>
+
+    <!-- Separador visual -->
+    <hr class="my-2">
+
+    <!-- Grupo 3: Navegación -->
+    <div class="d-flex flex-wrap gap-2">
+        <h6 class="w-100 text-muted small mb-1">
+            <i class="bi bi-compass"></i> Navegación
+        </h6>
+        <a th:href="@{/pedidos/listar}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Volver a Pedidos
+        </a>
+        <a th:href="@{/menuprincipal}" class="btn btn-outline-dark">
+            <i class="bi bi-grid-3x3-gap-fill"></i> Menú Principal
+        </a>
+    </div>
+</div>
 
         <!-- Lista de Detalles -->
         <div class="table-responsive">
@@ -148,6 +189,9 @@
                         <td th:text="'S/ ' + ${det.precioUnitarioHistorico}"></td>
                         <td th:text="'S/ ' + ${det.montoSubtotal}"></td>
                         <td>
+
+                     
+
                             <a th:href="@{/detalles/actualiza/{id}(id=${det.id})}" class="btn btn-success btn-sm">
                                 <i class="bi bi-pencil"></i>
                             </a>

@@ -8,9 +8,14 @@ import pe.com.tatapizzeria.entity.DetallePedidosEntity;
 import pe.com.tatapizzeria.repository.PedidosRepository;
 import pe.com.tatapizzeria.repository.DetallePedidosRepository;
 import pe.com.tatapizzeria.service.PedidosService;
+import pe.com.tatapizzeria.repository.HistorialEstadosPedidoRepository;
+import pe.com.tatapizzeria.entity.HistorialEstadosPedidoEntity;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+
 
 @Service
 public class PedidosServiceImpl implements PedidosService {
@@ -21,6 +26,9 @@ public class PedidosServiceImpl implements PedidosService {
     @Autowired
     private DetallePedidosRepository detalleRepository;
 
+    @Autowired
+    private HistorialEstadosPedidoRepository historialRepository;
+    
     @Override
     public List<PedidosEntity> findAll() {
         return repository.findAll();
@@ -39,23 +47,32 @@ public class PedidosServiceImpl implements PedidosService {
     @Override
     @Transactional
     public PedidosEntity add(PedidosEntity obj) {
-        //  Generar fecha y hora automáticamente
-        obj.setFechaHoraPedido(LocalDateTime.now());
-        
         // Inicializar montos
         obj.setMontoSubtotal(0.0);
         
-        // Calcular costo delivery según tipo de entrega
         if ("DELIVERY".equalsIgnoreCase(obj.getTipoEntrega())) {
             obj.setCostoDelivery(5.0);
         } else {
             obj.setCostoDelivery(0.0);
         }
         
-        // Calcular total inicial
         obj.setMontoTotal(obj.getCostoDelivery());
         
-        return repository.save(obj);
+        // Guardar el pedido
+        var pedidoGuardado = repository.save(obj);
+        
+        // 🔥 Crear el historial con el usuario del pedido
+        HistorialEstadosPedidoEntity historial = new HistorialEstadosPedidoEntity();
+        historial.setPedido(pedidoGuardado);
+        historial.setEstado("CREADO");
+        historial.setFechaHoraCambio(LocalDateTime.now());
+        
+        // 🔥 ASIGNAR EL USUARIO DEL PEDIDO
+        historial.setUsuarioCambio(obj.getUsuario()); // Usuario que creó el pedido
+        
+        historialRepository.save(historial);
+        
+        return pedidoGuardado;
     }
 
     @Override

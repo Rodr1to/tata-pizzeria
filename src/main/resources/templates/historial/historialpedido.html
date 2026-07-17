@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tata Pizza | Historial del Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-orange: #F15A22;
+            --primary-hover: #D9480F;
+            --cream-bg: #FFF8F3;
+            --text-dark: #2B2B2B;
+            --text-gray: #6B7280;
+        }
+        .bg-primary-custom{
+            background-color: var(--primary-orange);
+            color: white;
+
+        }
+        body {
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .table-dark-custom {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+        .page-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+        .badge-custom {
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-creado { background-color: #606060; color: white; }
+        .badge-pendiente { background-color: #f0ad4e; color: white; }
+        .badge-en-preparacion { background-color: #5bc0de; color: white; }
+        .badge-en-camino { background-color: #5bc0de; color: white; }
+        .badge-entregado { background-color: #28a745; color: white; }
+        .badge-cancelado { background-color: #dc3545; color: white; }
+        .badge-recibido { background-color: #5bc0de; color: white; }
+        .badge-listo { background-color: #5bc0de; color: white; }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="page-title">
+            <i class="bi bi-clock-history"></i> Historial del Pedido #<span th:text="${pedido.id}"></span>
+        </h1>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary-custom text-white">
+                <i class="bi bi-info-circle"></i> Información del Pedido
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Cliente:</strong>
+                        <span th:text="${pedido.cliente.nombres} + ' ' + ${pedido.cliente.apellidos}"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Sede:</strong>
+                        <span th:text="${pedido.sede.nombre}"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Total:</strong>
+                        <span class="fw-bold text-success" th:text="'S/ ' + ${pedido.montoTotal}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="mb-3">
+            <div class="d-flex flex-wrap gap-2">
+
+                    <a th:href="@{/pedidos/detalles/{id}(id=${pedido.id})}" class="btn btn-primary">
+                    <i class="bi bi-eye"></i> Ver Detalle del Pedido
+                </a>
+
+                <a th:href="@{/historial/listar}" class="btn btn-dark">
+                    <i class="bi bi-list-ul"></i> Ver Otros Historiales
+                </a>
+
+            
+            
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark-custom">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha y Hora</th>
+                        <th scope="col">Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="hist : ${listarhistorial}">
+                        <td th:text="${hist.id}"></td>
+                        <td>
+                            <span th:if="${hist.estado == 'CREADO'}" class="badge-custom badge-creado">Creado</span>
+                            <span th:if="${hist.estado == 'PENDIENTE'}" class="badge-custom badge-pendiente">Pendiente</span>
+                            <span th:if="${hist.estado == 'RECIBIDO'}" class="badge-custom badge-recibido">Recibido</span>
+                            <span th:if="${hist.estado == 'EN_PREPARACION'}" class="badge-custom badge-en-preparacion">En Preparación</span>
+                            <span th:if="${hist.estado == 'LISTO'}" class="badge-custom badge-listo">Listo</span>
+                            <span th:if="${hist.estado == 'EN_CAMINO'}" class="badge-custom badge-en-camino">En Camino</span>
+                            <span th:if="${hist.estado == 'ENTREGADO'}" class="badge-custom badge-entregado">Entregado</span>
+                            <span th:if="${hist.estado == 'CANCELADO'}" class="badge-custom badge-cancelado">Cancelado</span>
+                        </td>
+                        <td th:text="${hist.fechaHoraCambio}"></td>
+                        <td th:text="${hist.usuarioCambio.empleado.nombres} + ' ' + ${hist.usuarioCambio.empleado.apellidos}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
