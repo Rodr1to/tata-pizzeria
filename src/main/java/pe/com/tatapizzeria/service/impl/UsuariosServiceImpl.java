@@ -30,7 +30,7 @@ public class UsuariosServiceImpl implements UsuariosService {
     public UsuariosEntity update(UsuariosEntity obj, Long id) {
         UsuariosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
-            BeanUtils.copyProperties(obj, actual, "codigo");
+            BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
             return repositorio.save(actual);
         }
         return null;

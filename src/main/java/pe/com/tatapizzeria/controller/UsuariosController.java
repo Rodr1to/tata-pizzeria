@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.SedesEntity;
 import pe.com.tatapizzeria.entity.UsuariosEntity;
 import pe.com.tatapizzeria.service.UsuariosService;
 import pe.com.tatapizzeria.service.EmpleadosService;
@@ -63,7 +65,11 @@ public class UsuariosController {
 
     @ModelAttribute("usuario")
     public UsuariosEntity ModeloUsuarios() {
-        return new UsuariosEntity();
+
+        UsuariosEntity usuario = new UsuariosEntity();
+        usuario.setEstado(true); 
+        return usuario;
+         
     }
 
     @PostMapping("/registrar")

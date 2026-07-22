@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.PreciosVariantesEntity;
+import pe.com.tatapizzeria.entity.ProductosEntity;
 import pe.com.tatapizzeria.service.PreciosVariantesService;
 import pe.com.tatapizzeria.service.ProductosService;
 import pe.com.tatapizzeria.service.TamanosService;
@@ -51,9 +52,13 @@ public class PreciosVariantesController {
 
     @ModelAttribute("variante")
     public PreciosVariantesEntity ModeloVariantes() {
-        return new PreciosVariantesEntity();
+    	
+    	PreciosVariantesEntity precio  = new PreciosVariantesEntity();
+    	precio.setEstado(true); 
+        return precio;
     }
 
+    
     @PostMapping("/registrar")
     public String RegistrarVariantes(@ModelAttribute("variante") PreciosVariantesEntity obj) {
         servicio.add(obj);
@@ -64,5 +69,23 @@ public class PreciosVariantesController {
     public String ActualizarVariantes(@ModelAttribute("variante") PreciosVariantesEntity obj, @PathVariable Long id) {
         servicio.update(obj, id);
         return "redirect:/variantes/listar";
+    }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarVariantes(Model modelo) {
+        modelo.addAttribute("listarvariantes", servicio.findAll());
+        return "variantes/habilitarvariantes";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarVariantes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/variantes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarVariantes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/variantes/habilita";
     }
 }

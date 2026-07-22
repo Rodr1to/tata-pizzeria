@@ -11,4 +11,8 @@ public interface PedidosService {
     PedidosEntity update(PedidosEntity obj, Long id);
     PedidosEntity delete(Long id);
     PedidosEntity enable(Long id);
+    
+    
+    // Recalcular montos
+    PedidosEntity recalcularMontos(Long idPedido);
 }

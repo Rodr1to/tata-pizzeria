@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tata Pizza | Habilitar Direcciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-orange: #F15A22;
+            --primary-hover: #D9480F;
+            --cream-bg: #FFF8F3;
+            --text-dark: #2B2B2B;
+            --text-gray: #6B7280;
+        }
+        body {
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .btn-primary-custom {
+            background-color: var(--primary-orange);
+            border-color: var(--primary-orange);
+            color: white;
+        }
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: white;
+        }
+        .page-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+        .btn-warning-custom {
+            background-color: #f0ad4e;
+            border-color: #f0ad4e;
+            color: white;
+        }
+        .btn-warning-custom:hover {
+            background-color: #ec971f;
+            border-color: #ec971f;
+            color: white;
+        }
+        .btn-danger-custom {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        .btn-danger-custom:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+            color: white;
+        }
+        .table-dark-custom {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+        .estado-habilitado {
+            color: #28a745;
+            font-weight: 600;
+        }
+        .estado-deshabilitado {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        .badge-etiqueta {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="page-title">
+            <i class="bi bi-arrow-repeat"></i> Habilitar/Deshabilitar Direcciones
+        </h1>
+        <a th:href="@{/direcciones/listar}" class="btn btn-dark">
+            <i class="bi bi-arrow-left"></i> Regresar
+        </a>
+        <div class="mb-3"></div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark-custom">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Distrito</th>
+                        <th scope="col">Etiqueta</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Habilitar</th>
+                        <th scope="col">Deshabilitar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dir : ${listardirecciones}">
+                        <th scope="row" th:text="${dir.id}"></th>
+                        <td th:text="${dir.cliente.nombres} + ' ' + ${dir.cliente.apellidos}"></td>
+                        <td th:text="${dir.direccionTexto}"></td>
+                        <td th:text="${dir.distrito}"></td>
+                        <td>
+                            <span class="badge-etiqueta" th:text="${dir.etiqueta}"></span>
+                        </td>
+                        <td>
+                            <span th:if="${dir.estado}" class="estado-habilitado">
+                                <i class="bi bi-check-circle-fill"></i> Activo
+                            </span>
+                            <span th:unless="${dir.estado}" class="estado-deshabilitado">
+                                <i class="bi bi-x-circle-fill"></i> Inactivo
+                            </span>
+                        </td>
+                        <td>
+                            <a th:href="@{/direcciones/habilitar/{id}(id=${dir.id})}" 
+                               class="btn btn-warning-custom"
+                               th:classappend="${dir.estado} ? 'disabled' : ''">
+                                <i class="bi bi-check-circle"></i> Habilitar
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/direcciones/deshabilitar/{id}(id=${dir.id})}" 
+                               class="btn btn-danger-custom"
+                               th:classappend="${!dir.estado} ? 'disabled' : ''">
+                                <i class="bi bi-x-circle"></i> Deshabilitar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

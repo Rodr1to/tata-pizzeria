@@ -1,35 +1,67 @@
 package pe.com.tatapizzeria.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import pe.com.tatapizzeria.entity.RepartidoresEntity;
 import pe.com.tatapizzeria.service.RepartidoresService;
-import java.util.List;
+import pe.com.tatapizzeria.service.SedesService;
 
 @RestController
 @RequestMapping("/api/repartidores")
 public class RepartidoresRestController {
     @Autowired
-    private RepartidoresService s;
+    private RepartidoresService servicio;
 
-    @GetMapping
-    public List<RepartidoresEntity> findAll() { return s.findAll(); }
+    @Autowired
+    private SedesService servicioSede;
 
-    @GetMapping("/custom")
-    public List<RepartidoresEntity> findAllCustom() { return s.findAllCustom(); }
+    @GetMapping("/listar")
+    public String MostrarListarRepartidores(Model modelo) {
+        modelo.addAttribute("listarrepartidores", servicio.findAllCustom());
+        return "repartidores/listarrepartidores";
+    }
 
-    @GetMapping("/{id}")
-    public RepartidoresEntity findById(@PathVariable Long id) { return s.findById(id); }
+    @GetMapping("/registro")
+    public String MostrarRegistrarRepartidores(Model modelo) {
+        modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
+        return "repartidores/registrarrepartidores";
+    }
 
-    @PostMapping
-    public RepartidoresEntity add(@RequestBody RepartidoresEntity o) { return s.add(o); }
+    @GetMapping("/actualiza/{id}")
+    public String MostrarActualizarRepartidores(Model modelo, @PathVariable Long id) {
+        modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
+        modelo.addAttribute("repartidor", servicio.findById(id));
+        return "repartidores/actualizarrepartidores";
+    }
 
-    @PutMapping("/{id}")
-    public RepartidoresEntity update(@RequestBody RepartidoresEntity o, @PathVariable Long id) { return s.update(o, id); }
+    @GetMapping("/habilita")
+    public String MostrarHabilitarRepartidores(Model modelo) {
+        modelo.addAttribute("listarrepartidores", servicio.findAll());
+        return "repartidores/habilitarrepartidores";
+    }
 
-    @DeleteMapping("/{id}")
-    public RepartidoresEntity delete(@PathVariable Long id) { return s.delete(id); }
+    @GetMapping("/eliminar/{id}")
+    public String EliminarRepartidores(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/repartidores/listar";
+    }
 
-    @PatchMapping("/{id}")
-    public RepartidoresEntity enable(@PathVariable Long id) { return s.enable(id); }
+    @ModelAttribute("repartidor")
+    public RepartidoresEntity ModeloRepartidores() {
+        return new RepartidoresEntity();
+    }
+
+    @PostMapping("/registrar")
+    public String RegistrarRepartidores(@ModelAttribute("repartidor") RepartidoresEntity obj) {
+        servicio.add(obj);
+        return "redirect:/repartidores/listar";
+    }
+
+    @PostMapping("/actualizar/{id}")
+    public String ActualizarRepartidores(@ModelAttribute("repartidor") RepartidoresEntity obj, @PathVariable Long id) {
+        servicio.update(obj, id);
+        return "redirect:/repartidores/listar";
+    }
 }

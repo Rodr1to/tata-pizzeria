@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.ComprobantesPagoEntity;
 import pe.com.tatapizzeria.entity.TiposComprobanteEntity;
 import pe.com.tatapizzeria.service.TiposComprobanteService;
 
@@ -37,9 +39,15 @@ public class TiposComprobanteController {
         return "redirect:/tiposcomprobante/listar";
     }
 
+    
     @ModelAttribute("tipo")
     public TiposComprobanteEntity ModeloTipos() {
-        return new TiposComprobanteEntity();
+    	
+    	TiposComprobanteEntity tipocomprobante = new TiposComprobanteEntity();
+    	tipocomprobante.setEstado(true); 
+    	
+        return tipocomprobante;
+        
     }
 
     @PostMapping("/registrar")
@@ -52,5 +60,23 @@ public class TiposComprobanteController {
     public String ActualizarTipos(@ModelAttribute("tipo") TiposComprobanteEntity obj, @PathVariable Long id) {
         servicio.update(obj, id);
         return "redirect:/tiposcomprobante/listar";
+    }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarTipos(Model modelo) {
+        modelo.addAttribute("listartipos", servicio.findAll());
+        return "tiposcomprobante/habilitartiposcomprobante";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarTipos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/tiposcomprobante/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarTipos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/tiposcomprobante/habilita";
     }
 }

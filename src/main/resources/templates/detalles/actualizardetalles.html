@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tata Pizza | Actualizar Detalle de Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-orange: #F15A22;
+            --primary-hover: #D9480F;
+            --cream-bg: #FFF8F3;
+            --text-dark: #2B2B2B;
+            --text-gray: #6B7280;
+        }
+        body {
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .btn-success-custom {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        .btn-success-custom:hover {
+            background-color: #218838;
+            border-color: #218838;
+            color: white;
+        }
+        .page-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+        .form-control:disabled {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="page-title">
+            <i class="bi bi-pencil-square"></i> Actualizar Detalle de Pedido
+        </h1>
+        <div class="mb-3"></div>
+        
+        <form th:action="@{/detalles/actualizar/{id}(id=*{id})}" method="post" th:object="${detalles}" id="detalleForm">
+            
+            <div class="row">
+                <div class="col-2">
+                    <label for="txtCod" class="form-label">ID:</label>
+                    <input type="text" class="form-control" id="txtCod" name="txtCod"
+                        readonly th:field="*{id}">
+                </div>
+            </div>
+
+            <!-- Campo oculto para el ID del pedido -->
+            <input type="hidden" name="idPedido" th:value="*{pedido.id}" />
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label for="cboVariante" class="form-label">Producto y Tamaño:</label>
+                    <select class="form-select" id="cboVariante" th:field="*{variante.id}" required onchange="calcularPrecios()">
+                        <option value="">Seleccione producto</option>
+                        <option th:each="var : ${listarvariantes}" 
+                                th:value="${var.id}" 
+                                th:text="${var.producto.nombre} + ' - ' + ${var.tamano.nombre}"
+                                th:data-precio="${var.precioBase}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <label for="cboBorde" class="form-label">Borde Relleno:</label>
+                    <select class="form-select" id="cboBorde" th:field="*{borde.id}" required onchange="calcularPrecios()">
+                        <option value="">Seleccione borde</option>
+                        <option th:each="bor : ${listarbordes}" 
+                                th:value="${bor.id}" 
+                                th:text="${bor.tipoBorde}"
+                                th:data-precio="${bor.precioAdicional}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <label for="txtCantidad" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="txtCantidad" name="txtCantidad"
+                        placeholder="Ingresa la cantidad" min="1" required th:field="*{cantidad}" 
+                        onchange="calcularPrecios()" onkeyup="calcularPrecios()">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label for="txtPrecioUnitario" class="form-label">Precio Unitario:</label>
+                    <input type="number" step="0.01" class="form-control" id="txtPrecioUnitario" 
+                        placeholder="Precio unitario" required th:field="*{precioUnitarioHistorico}" readonly>
+                </div>
+
+                <div class="col-4">
+                    <label for="txtPrecioBorde" class="form-label">Precio del Borde:</label>
+                    <input type="number" step="0.01" class="form-control" id="txtPrecioBorde" 
+                        placeholder="Precio del borde" required th:field="*{precioBordeHistorico}" readonly>
+                </div>
+
+                <div class="col-4">
+                    <label for="txtSubtotal" class="form-label">Subtotal:</label>
+                    <input type="number" step="0.01" class="form-control" id="txtSubtotal" 
+                        placeholder="Subtotal" required th:field="*{montoSubtotal}" readonly>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="chkEst" class="form-label">Estado:</label>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" id="chkEst" 
+                               th:field="*{estado}">
+                        <label class="form-check-label" for="chkEst">
+                            Activo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success-custom">
+                        <i class="bi bi-save"></i> Actualizar
+                    </button>
+                    <a th:href="@{/pedidos/detalles/{id}(id=*{pedido.id})}" class="btn btn-dark">
+                        <i class="bi bi-arrow-left"></i> Volver al Pedido
+                    </a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    
+    <script>
+        function calcularPrecios() {
+            const varianteSelect = document.getElementById('cboVariante');
+            const bordeSelect = document.getElementById('cboBorde');
+            const cantidadInput = document.getElementById('txtCantidad');
+            const precioUnitarioInput = document.getElementById('txtPrecioUnitario');
+            const precioBordeInput = document.getElementById('txtPrecioBorde');
+            const subtotalInput = document.getElementById('txtSubtotal');
+
+            const precioUnitario = parseFloat(varianteSelect.options[varianteSelect.selectedIndex]?.getAttribute('data-precio')) || 0;
+            const precioBorde = parseFloat(bordeSelect.options[bordeSelect.selectedIndex]?.getAttribute('data-precio')) || 0;
+            const cantidad = parseInt(cantidadInput.value) || 1;
+
+            const subtotal = cantidad * (precioUnitario + precioBorde);
+
+            precioUnitarioInput.value = precioUnitario.toFixed(2);
+            precioBordeInput.value = precioBorde.toFixed(2);
+            subtotalInput.value = subtotal.toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            calcularPrecios();
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

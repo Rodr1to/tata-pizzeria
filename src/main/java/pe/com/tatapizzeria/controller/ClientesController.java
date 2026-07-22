@@ -43,9 +43,24 @@ public class ClientesController {
         return "redirect:/clientes/listar";
     }
 
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarClientes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/clientes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarClientes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/clientes/habilita";
+    }
+
+    // ModelAttribute con estado activo por defecto
     @ModelAttribute("cliente")
     public ClientesEntity ModeloClientes() {
-        return new ClientesEntity();
+        ClientesEntity cliente = new ClientesEntity();
+        cliente.setEstado(true); 
+        return cliente;
     }
 
     @PostMapping("/registrar")

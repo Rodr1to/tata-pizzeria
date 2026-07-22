@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>El Tata Pizza | Registrar Dirección</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary-orange: #F15A22;
+            --primary-hover: #D9480F;
+            --cream-bg: #FFF8F3;
+            --text-dark: #2B2B2B;
+            --text-gray: #6B7280;
+        }
+        body {
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .btn-primary-custom {
+            background-color: var(--primary-orange);
+            border-color: var(--primary-orange);
+            color: white;
+        }
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: white;
+        }
+        .page-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="page-title">
+            <i class="bi bi-plus-circle"></i> Registro de Dirección de Cliente
+        </h1>
+        <div class="mb-3"></div>
+        
+        <form th:action="@{/direcciones/registrar}" method="post" th:object="${direccion}">
+            
+            <div class="row">
+                <div class="col-6">
+                    <label for="cboCliente" class="form-label">Cliente:</label>
+                    <select class="form-select" id="cboCliente" th:field="*{cliente.id}">
+                        <option value="">Seleccione cliente</option>
+                        <option th:each="cli : ${listarclientes}" 
+                                th:value="${cli.id}" 
+                                th:text="${cli.nombres} + ' ' + ${cli.apellidos} + ' - ' + ${cli.numeroDocumento}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <label for="txtEtiqueta" class="form-label">Etiqueta:</label>
+                    <select class="form-select" id="txtEtiqueta" th:field="*{etiqueta}">
+                        <option value="">Seleccione etiqueta</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="txtDireccionTexto" class="form-label">Dirección:</label>
+                    <textarea class="form-control" id="txtDireccionTexto" rows="2" 
+                              placeholder="Ingresa la dirección completa (Ej: Av. Los Pinos 123)"
+                              required th:field="*{direccionTexto}"></textarea>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="txtReferencia" class="form-label">Referencia:</label>
+                    <input type="text" class="form-control" id="txtReferencia" name="txtReferencia"
+                        placeholder="Ej: Cerca al parque, frente a la tienda" th:field="*{referencia}">
+                </div>
+
+                <div class="col-6">
+                    <label for="txtDistrito" class="form-label">Distrito:</label>
+                    <input type="text" class="form-control" id="txtDistrito" name="txtDistrito"
+                        placeholder="Ej: Cieneguilla, Villa El Salvador" required th:field="*{distrito}">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label for="txtCoordenadasGps" class="form-label">Coordenadas GPS:</label>
+                    <input type="text" class="form-control" id="txtCoordenadasGps" name="txtCoordenadasGps"
+                        placeholder="Ej: -12.1234, -76.9876" th:field="*{coordenadasGps}">
+                </div>
+
+                <div class="col-6">
+                    <label for="chkEst" class="form-label">Estado:</label>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" id="chkEst" 
+                               th:field="*{estado}">
+                        <label class="form-check-label" for="chkEst">
+                            Activo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="bi bi-save"></i> Registrar
+                    </button>
+                    <a th:href="@{/direcciones/listar}" class="btn btn-dark">
+                        <i class="bi bi-arrow-left"></i> Regresar
+                    </a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

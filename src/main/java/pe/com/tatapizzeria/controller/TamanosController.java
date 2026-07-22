@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.CategoriasProductoEntity;
 import pe.com.tatapizzeria.entity.TamanosEntity;
 import pe.com.tatapizzeria.service.TamanosService;
 
@@ -39,8 +41,21 @@ public class TamanosController {
 
     @ModelAttribute("tamano")
     public TamanosEntity ModeloTamanos() {
-        return new TamanosEntity();
+    	
+    	TamanosEntity tamano = new TamanosEntity();
+    	tamano.setEstado(true); 
+        return tamano;
+          
+          
     }
+    
+    @ModelAttribute("categoria")
+    public CategoriasProductoEntity ModeloCategorias() {
+        CategoriasProductoEntity categoria = new CategoriasProductoEntity();
+        categoria.setEstado(true); 
+        return categoria;
+    }
+    
 
     @PostMapping("/registrar")
     public String RegistrarTamanos(@ModelAttribute("tamano") TamanosEntity obj) {
@@ -53,4 +68,25 @@ public class TamanosController {
         servicio.update(obj, id);
         return "redirect:/tamanos/listar";
     }
+    
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarTamanos(Model modelo) {
+        modelo.addAttribute("listartamanos", servicio.findAll());
+        return "tamanos/habilitartamanos";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarTamanos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/tamanos/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarTamanos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/tamanos/habilita";
+    }
+    
+    
 }

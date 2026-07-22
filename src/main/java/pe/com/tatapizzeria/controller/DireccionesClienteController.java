@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.CombosPromocionesEntity;
 import pe.com.tatapizzeria.entity.DireccionesClienteEntity;
 import pe.com.tatapizzeria.service.DireccionesClienteService;
 import pe.com.tatapizzeria.service.ClientesService;
@@ -21,6 +23,33 @@ public class DireccionesClienteController {
     @GetMapping("/listar")
     public String MostrarListarDirecciones(Model modelo) {
         modelo.addAttribute("listardirecciones", servicio.findAllCustom());
+        modelo.addAttribute("listarclientes", servicioCli.findAllCustom()); //  Para el filtro
+        return "direcciones/listardirecciones";
+    }
+
+    // NUEVO MÉTODO: Listar direcciones por cliente
+    @GetMapping("/listarPorCliente/{idCliente}")
+    public String MostrarListarDireccionesPorCliente(Model modelo, @PathVariable Long idCliente) {
+        // Obtener el cliente para mostrar su nombre
+        var cliente = servicioCli.findById(idCliente);
+        modelo.addAttribute("cliente", cliente);
+        // Obtener direcciones de ese cliente
+        modelo.addAttribute("listardirecciones", servicio.findByClienteId(idCliente));
+        modelo.addAttribute("listarclientes", servicioCli.findAllCustom()); // Para el filtro
+        return "direcciones/listardirecciones";
+    }
+
+    //  NUEVO MÉTODO: Filtrar direcciones por cliente (con parámetro)
+    @GetMapping("/filtrar")
+    public String FiltrarDireccionesPorCliente(Model modelo, @RequestParam(required = false) Long idCliente) {
+        if (idCliente != null && idCliente > 0) {
+            var cliente = servicioCli.findById(idCliente);
+            modelo.addAttribute("cliente", cliente);
+            modelo.addAttribute("listardirecciones", servicio.findByClienteId(idCliente));
+        } else {
+            modelo.addAttribute("listardirecciones", servicio.findAllCustom());
+        }
+        modelo.addAttribute("listarclientes", servicioCli.findAllCustom());
         return "direcciones/listardirecciones";
     }
 
@@ -45,9 +74,13 @@ public class DireccionesClienteController {
 
     @ModelAttribute("direccion")
     public DireccionesClienteEntity ModeloDirecciones() {
-        return new DireccionesClienteEntity();
+    	DireccionesClienteEntity direccion  = new DireccionesClienteEntity();
+    	direccion.setEstado(true); 
+        return direccion;
     }
 
+    
+    
     @PostMapping("/registrar")
     public String RegistrarDirecciones(@ModelAttribute("direccion") DireccionesClienteEntity obj) {
         servicio.add(obj);
@@ -58,5 +91,24 @@ public class DireccionesClienteController {
     public String ActualizarDirecciones(@ModelAttribute("direccion") DireccionesClienteEntity obj, @PathVariable Long id) {
         servicio.update(obj, id);
         return "redirect:/direcciones/listar";
+    }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarDirecciones(Model modelo) {
+        modelo.addAttribute("listardirecciones", servicio.findAll());
+        modelo.addAttribute("listarclientes", servicioCli.findAllCustom());
+        return "direcciones/habilitardirecciones";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarDirecciones(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/direcciones/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarDirecciones(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/direcciones/habilita";
     }
 }

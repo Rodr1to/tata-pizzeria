@@ -1,58 +1,166 @@
 package pe.com.tatapizzeria.service.impl;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.com.tatapizzeria.entity.PedidosEntity;
+import pe.com.tatapizzeria.entity.DetallePedidosEntity;
 import pe.com.tatapizzeria.repository.PedidosRepository;
+import pe.com.tatapizzeria.repository.DetallePedidosRepository;
 import pe.com.tatapizzeria.service.PedidosService;
+import pe.com.tatapizzeria.repository.HistorialEstadosPedidoRepository;
+import pe.com.tatapizzeria.entity.HistorialEstadosPedidoEntity;
+
+
+import java.time.LocalDateTime;
 import java.util.List;
+
+
 
 @Service
 public class PedidosServiceImpl implements PedidosService {
 
     @Autowired
-    private PedidosRepository repositorio;
+    private PedidosRepository repository;
+
+    @Autowired
+    private DetallePedidosRepository detalleRepository;
+
+    @Autowired
+    private HistorialEstadosPedidoRepository historialRepository;
+    
+    @Override
+    public List<PedidosEntity> findAll() {
+        return repository.findAll();
+    }
 
     @Override
-    public List<PedidosEntity> findAll() { return repositorio.findAll(); }
+    public List<PedidosEntity> findAllCustom() {
+        return repository.findAllCustom();
+    }
 
     @Override
-    public List<PedidosEntity> findAllCustom() { return repositorio.findAllCustom(); }
+    public PedidosEntity findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 
     @Override
-    public PedidosEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    @Transactional
+    public PedidosEntity add(PedidosEntity obj) {
+        // Inicializar montos
+        obj.setMontoSubtotal(0.0);
+        
+        if ("DELIVERY".equalsIgnoreCase(obj.getTipoEntrega())) {
+            obj.setCostoDelivery(5.0);
+        } else {
+            obj.setCostoDelivery(0.0);
+        }
+        
+        obj.setMontoTotal(obj.getCostoDelivery());
+        
+        // Guardar el pedido
+        var pedidoGuardado = repository.save(obj);
+        
+        // 🔥 Crear el historial con el usuario del pedido
+        HistorialEstadosPedidoEntity historial = new HistorialEstadosPedidoEntity();
+        historial.setPedido(pedidoGuardado);
+        historial.setEstado("CREADO");
+        historial.setFechaHoraCambio(LocalDateTime.now());
+        
+        // 🔥 ASIGNAR EL USUARIO DEL PEDIDO
+        historial.setUsuarioCambio(obj.getUsuario()); // Usuario que creó el pedido
+        
+        historialRepository.save(historial);
+        
+        return pedidoGuardado;
+    }
 
     @Override
-    public PedidosEntity add(PedidosEntity obj) { return repositorio.save(obj); }
-
-    @Override
+    @Transactional
     public PedidosEntity update(PedidosEntity obj, Long id) {
-        PedidosEntity actual = repositorio.findById(id).orElse(null);
-        if (actual != null) {
-            BeanUtils.copyProperties(obj, actual, "codigo");
-            return repositorio.save(actual);
+        var existing = findById(id);
+        if (existing != null) {
+            existing.setCliente(obj.getCliente());
+            existing.setSede(obj.getSede());
+            existing.setUsuario(obj.getUsuario());
+            existing.setDireccion(obj.getDireccion());
+            existing.setRepartidor(obj.getRepartidor());
+            // NO actualizar la fecha, mantener la existente
+            // existing.setFechaHoraPedido(obj.getFechaHoraPedido());  
+            existing.setTipoEntrega(obj.getTipoEntrega());
+            existing.setOrigenPedido(obj.getOrigenPedido());
+            existing.setObservaciones(obj.getObservaciones());
+            existing.setEstado(obj.getEstado());
+            
+            // Recalcular montos
+            recalcularMontos(id);
+            
+            return repository.save(existing);
         }
         return null;
     }
 
     @Override
+    @Transactional
     public PedidosEntity delete(Long id) {
-        PedidosEntity actual = repositorio.findById(id).orElse(null);
-        if (actual != null) {
-            actual.setEstado(false);
-            return repositorio.save(actual);
+        var obj = findById(id);
+        if (obj != null) {
+            obj.setEstado(false);
+            // Recalcular montos después de deshabilitar
+            recalcularMontos(id);
+            return repository.save(obj);
         }
         return null;
     }
 
     @Override
+    @Transactional
     public PedidosEntity enable(Long id) {
-        PedidosEntity actual = repositorio.findById(id).orElse(null);
-        if (actual != null) {
-            actual.setEstado(true);
-            return repositorio.save(actual);
+        var obj = findById(id);
+        if (obj != null) {
+            obj.setEstado(true);
+            // Recalcular montos después de habilitar
+            recalcularMontos(id);
+            return repository.save(obj);
         }
         return null;
+    }
+
+    //  MÉTODO: Recalcular montos
+    @Override
+    @Transactional
+    public PedidosEntity recalcularMontos(Long idPedido) {
+        var pedido = findById(idPedido);
+        if (pedido == null) return null;
+
+        // Obtener todos los detalles activos del pedido
+        List<DetallePedidosEntity> detalles = detalleRepository.findByPedidoIdAndEstadoTrue(idPedido);
+        
+        // Calcular subtotal (suma de todos los montosSubtotal de los detalles)
+        double subtotal = detalles.stream()
+                .mapToDouble(DetallePedidosEntity::getMontoSubtotal)
+                .sum();
+        
+        // Calcular costo delivery según tipo de entrega
+        double costoDelivery = calcularCostoDelivery(pedido);
+        
+        // Calcular total
+        double total = subtotal + costoDelivery;
+        
+        // Actualizar el pedido
+        pedido.setMontoSubtotal(subtotal);
+        pedido.setCostoDelivery(costoDelivery);
+        pedido.setMontoTotal(total);
+        
+        return repository.save(pedido);
+    }
+
+    // Método auxiliar para calcular costo delivery
+    private double calcularCostoDelivery(PedidosEntity pedido) {
+        if (pedido == null) return 0.0;
+        if ("DELIVERY".equalsIgnoreCase(pedido.getTipoEntrega())) {
+            return 5.0; // Precio fijo para delivery
+        }
+        return 0.0; // Sin costo para RECOJO o SALON
     }
 }

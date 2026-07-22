@@ -11,4 +11,5 @@ public interface DetallePedidosService {
     DetallePedidosEntity update(DetallePedidosEntity obj, Long id);
     DetallePedidosEntity delete(Long id);
     DetallePedidosEntity enable(Long id);
+    List<DetallePedidosEntity> findByPedidoId(Long idPedido);
 }

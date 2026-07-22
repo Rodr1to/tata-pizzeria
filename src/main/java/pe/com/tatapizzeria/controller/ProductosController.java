@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import pe.com.tatapizzeria.entity.BordesRellenoEntity;
 import pe.com.tatapizzeria.entity.ProductosEntity;
 import pe.com.tatapizzeria.service.ProductosService;
 import pe.com.tatapizzeria.service.CategoriasProductoService;
@@ -45,8 +47,11 @@ public class ProductosController {
 
     @ModelAttribute("producto")
     public ProductosEntity ModeloProductos() {
-        return new ProductosEntity();
+    	ProductosEntity producto  = new ProductosEntity();
+    	producto.setEstado(true); 
+        return producto;
     }
+       
 
     @PostMapping("/registrar")
     public String RegistrarProductos(@ModelAttribute("producto") ProductosEntity obj) {
@@ -58,5 +63,23 @@ public class ProductosController {
     public String ActualizarProductos(@ModelAttribute("producto") ProductosEntity obj, @PathVariable Long id) {
         servicio.update(obj, id);
         return "redirect:/productos/listar";
+    }
+    
+    @GetMapping("/habilita")
+    public String MostrarHabilitarProductos(Model modelo) {
+        modelo.addAttribute("listarproductos", servicio.findAll());
+        return "productos/habilitarproductos";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarProductos(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/productos/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarProductos(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/productos/habilita";
     }
 }

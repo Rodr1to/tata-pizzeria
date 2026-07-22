@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.com.tatapizzeria.entity.BordesRellenoEntity;
+import pe.com.tatapizzeria.entity.TamanosEntity;
 import pe.com.tatapizzeria.service.BordesRellenoService;
 
 @Controller
@@ -39,9 +40,14 @@ public class BordesRellenoController {
 
     @ModelAttribute("borde")
     public BordesRellenoEntity ModeloBordes() {
-        return new BordesRellenoEntity();
+    	
+    	BordesRellenoEntity borde  = new BordesRellenoEntity();
+    	borde.setEstado(true); 
+        return borde;
+    	
     }
 
+    
     @PostMapping("/registrar")
     public String RegistrarBordes(@ModelAttribute("borde") BordesRellenoEntity obj) {
         servicio.add(obj);
@@ -52,5 +58,23 @@ public class BordesRellenoController {
     public String ActualizarBordes(@ModelAttribute("borde") BordesRellenoEntity obj, @PathVariable Long id) {
         servicio.update(obj, id);
         return "redirect:/bordes/listar";
+    }
+
+    @GetMapping("/habilita")
+    public String MostrarHabilitarBordes(Model modelo) {
+        modelo.addAttribute("listarbordes", servicio.findAll());
+        return "bordes/habilitarbordes";
+    }
+
+    @GetMapping("/habilitar/{id}")
+    public String HabilitarBordes(@PathVariable Long id) {
+        servicio.enable(id);
+        return "redirect:/bordes/habilita";
+    }
+
+    @GetMapping("/deshabilitar/{id}")
+    public String DeshabilitarBordes(@PathVariable Long id) {
+        servicio.delete(id);
+        return "redirect:/bordes/habilita";
     }
 }

@@ -11,4 +11,5 @@ public interface CategoriasProductoService {
     CategoriasProductoEntity update(CategoriasProductoEntity obj, Long id);
     CategoriasProductoEntity delete(Long id);
     CategoriasProductoEntity enable(Long id);
+    
 }
