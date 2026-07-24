@@ -16,7 +16,7 @@ public class TiposComprobanteEntity implements Serializable {
     @Id
     @Column(name = "id_tipo_comprobante")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombre", length = 30, nullable = false, unique = true)
     private String nombre;

@@ -17,7 +17,7 @@ public class ComprobantesPagoEntity implements Serializable {
     @Id
     @Column(name = "id_comprobante")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false)

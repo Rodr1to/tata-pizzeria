@@ -18,7 +18,7 @@ public class RepartidoresEntity implements Serializable {
     @Id
     @Column(name = "id_repartidor")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_sede", nullable = false)

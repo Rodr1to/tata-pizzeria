@@ -19,17 +19,17 @@ public class BordesRellenoRestController {
     public List<BordesRellenoEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public BordesRellenoEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public BordesRellenoEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public BordesRellenoEntity add(@RequestBody BordesRellenoEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public BordesRellenoEntity update(@RequestBody BordesRellenoEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public BordesRellenoEntity update(@RequestBody BordesRellenoEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public BordesRellenoEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public BordesRellenoEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public BordesRellenoEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public BordesRellenoEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

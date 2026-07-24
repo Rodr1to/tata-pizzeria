@@ -19,7 +19,7 @@ public class SedesEntity implements Serializable {
     @Id
     @Column(name = "id_sede")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;

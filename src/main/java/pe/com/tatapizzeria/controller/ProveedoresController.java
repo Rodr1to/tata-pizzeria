@@ -27,7 +27,7 @@ public class ProveedoresController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarProveedores(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarProveedores(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("proveedores", servicio.findById(id));
         return "proveedores/actualizarproveedores";
     }
@@ -39,19 +39,19 @@ public class ProveedoresController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarProveedores(@PathVariable Long id) {
+    public String EliminarProveedores(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/proveedores/listar";
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarProveedores(@PathVariable Long id) {
+    public String HabilitarProveedores(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/proveedores/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarProveedores(@PathVariable Long id) {
+    public String DeshabilitarProveedores(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/proveedores/habilita";
     }
@@ -73,7 +73,7 @@ public class ProveedoresController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarProveedores(@ModelAttribute("proveedor") ProveedoresEntity obj, @PathVariable Long id) {
+    public String ActualizarProveedores(@ModelAttribute("proveedor") ProveedoresEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/proveedores/listar";
     }

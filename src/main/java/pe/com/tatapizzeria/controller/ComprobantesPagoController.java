@@ -36,7 +36,7 @@ public class ComprobantesPagoController {
     }
 
     @GetMapping("/registroConPedido/{idPedido}")
-    public String MostrarRegistrarComprobantesConPedido(Model modelo, @PathVariable Long idPedido) {
+    public String MostrarRegistrarComprobantesConPedido(Model modelo, @PathVariable Integer idPedido) {
         var pedido = pedidosService.findById(idPedido);
         
         if (pedido == null) {
@@ -58,14 +58,14 @@ public class ComprobantesPagoController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarComprobantes(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarComprobantes(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listartipos", servicioTipo.findAllCustom());
         modelo.addAttribute("comprobantes", servicio.findById(id));
         return "comprobantes/actualizarcomprobantes";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarComprobantes(@PathVariable Long id) {
+    public String EliminarComprobantes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/comprobantes/listar";
     }
@@ -96,7 +96,7 @@ public class ComprobantesPagoController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarComprobantes(@ModelAttribute("comprobante") ComprobantesPagoEntity obj, @PathVariable Long id) {
+    public String ActualizarComprobantes(@ModelAttribute("comprobante") ComprobantesPagoEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/comprobantes/listar";
     }
@@ -108,13 +108,13 @@ public class ComprobantesPagoController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarComprobantes(@PathVariable Long id) {
+    public String HabilitarComprobantes(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/comprobantes/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarComprobantes(@PathVariable Long id) {
+    public String DeshabilitarComprobantes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/comprobantes/habilita";
     }

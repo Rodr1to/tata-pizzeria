@@ -16,7 +16,7 @@ public class BordesRellenoEntity implements Serializable {
     @Id
     @Column(name = "id_borde")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "tipo_borde", length = 50, nullable = false, unique = true)
     private String tipoBorde;

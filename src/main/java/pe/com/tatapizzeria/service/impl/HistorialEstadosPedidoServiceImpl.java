@@ -26,7 +26,7 @@ public class HistorialEstadosPedidoServiceImpl implements HistorialEstadosPedido
     }
 
     @Override
-    public HistorialEstadosPedidoEntity findById(Long id) {
+    public HistorialEstadosPedidoEntity findById(Integer id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -37,12 +37,12 @@ public class HistorialEstadosPedidoServiceImpl implements HistorialEstadosPedido
 
     // Obtener TODOS los historiales de un pedido
     @Override
-    public List<HistorialEstadosPedidoEntity> findByPedidoId(Long idPedido) {
+    public List<HistorialEstadosPedidoEntity> findByPedidoId(Integer idPedido) {
         return repository.findByPedidoIdOrderByFechaHoraCambioAsc(idPedido);
     }
 
     @Override
-    public HistorialEstadosPedidoEntity findLastEstadoByPedidoId(Long idPedido) {
+    public HistorialEstadosPedidoEntity findLastEstadoByPedidoId(Integer idPedido) {
         List<HistorialEstadosPedidoEntity> historial = repository.findLastEstadoByPedidoId(idPedido);
         return historial.isEmpty() ? null : historial.get(0);
     }
@@ -53,7 +53,7 @@ public class HistorialEstadosPedidoServiceImpl implements HistorialEstadosPedido
     }
 
     @Transactional
-    public HistorialEstadosPedidoEntity actualizarEstadoPedido(Long idPedido, String nuevoEstado, Long idUsuario) {
+    public HistorialEstadosPedidoEntity actualizarEstadoPedido(Integer idPedido, String nuevoEstado,Integer idUsuario) {
         var pedido = pedidosRepository.findById(idPedido).orElse(null);
         if (pedido == null) return null;
 

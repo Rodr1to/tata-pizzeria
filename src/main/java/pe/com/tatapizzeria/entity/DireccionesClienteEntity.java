@@ -16,7 +16,7 @@ public class DireccionesClienteEntity implements Serializable {
     @Id
     @Column(name = "id_direccion")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)

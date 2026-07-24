@@ -26,13 +26,13 @@ public class CategoriasProductoController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarCategorias(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarCategorias(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("categorias", servicio.findById(id));
         return "categorias/actualizarcategorias";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarCategorias(@PathVariable Long id) {
+    public String EliminarCategorias(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/categorias/listar";
     }
@@ -51,7 +51,7 @@ public class CategoriasProductoController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarCategorias(@ModelAttribute("categoria") CategoriasProductoEntity obj, @PathVariable Long id) {
+    public String ActualizarCategorias(@ModelAttribute("categoria") CategoriasProductoEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/categorias/listar";
     }
@@ -64,13 +64,13 @@ public class CategoriasProductoController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarCategorias(@PathVariable Long id) {
+    public String HabilitarCategorias(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/categorias/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarCategorias(@PathVariable Long id) {
+    public String DeshabilitarCategorias(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/categorias/habilita";
     }

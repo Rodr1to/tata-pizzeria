@@ -27,13 +27,13 @@ public class CombosPromocionesController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarCombos(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarCombos(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("combos", servicio.findById(id));
         return "combos/actualizarcombos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarCombos(@PathVariable Long id) {
+    public String EliminarCombos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/combos/listar";
     }
@@ -53,7 +53,7 @@ public class CombosPromocionesController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarCombos(@ModelAttribute("combo") CombosPromocionesEntity obj, @PathVariable Long id) {
+    public String ActualizarCombos(@ModelAttribute("combo") CombosPromocionesEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/combos/listar";
     }
@@ -65,13 +65,13 @@ public class CombosPromocionesController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarCombos(@PathVariable Long id) {
+    public String HabilitarCombos(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/combos/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarCombos(@PathVariable Long id) {
+    public String DeshabilitarCombos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/combos/habilita";
     }

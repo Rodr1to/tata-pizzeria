@@ -18,7 +18,7 @@ public class UsuariosEntity implements Serializable {
     @Id
     @Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false, unique = true)

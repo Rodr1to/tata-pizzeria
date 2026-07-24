@@ -21,13 +21,13 @@ public class TamanosServiceImpl implements TamanosService {
     public List<TamanosEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public TamanosEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public TamanosEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public TamanosEntity add(TamanosEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public TamanosEntity update(TamanosEntity obj, Long id) {
+    public TamanosEntity update(TamanosEntity obj, Integer id) {
         TamanosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class TamanosServiceImpl implements TamanosService {
     }
 
     @Override
-    public TamanosEntity delete(Long id) {
+    public TamanosEntity delete(Integer id) {
         TamanosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class TamanosServiceImpl implements TamanosService {
     }
 
     @Override
-    public TamanosEntity enable(Long id) {
+    public TamanosEntity enable(Integer id) {
         TamanosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

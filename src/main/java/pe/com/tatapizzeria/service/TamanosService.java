@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.TamanosEntity;
 public interface TamanosService {
     List<TamanosEntity> findAll();
     List<TamanosEntity> findAllCustom();
-    TamanosEntity findById(Long id);
+    TamanosEntity findById(Integer id);
     TamanosEntity add(TamanosEntity obj);
-    TamanosEntity update(TamanosEntity obj, Long id);
-    TamanosEntity delete(Long id);
-    TamanosEntity enable(Long id);
+    TamanosEntity update(TamanosEntity obj,Integer id);
+    TamanosEntity delete(Integer id);
+    TamanosEntity enable(Integer id);
 }

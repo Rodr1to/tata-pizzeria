@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.ProveedoresEntity;
 public interface ProveedoresService {
     List<ProveedoresEntity> findAll();
     List<ProveedoresEntity> findAllCustom();
-    ProveedoresEntity findById(Long id);
+    ProveedoresEntity findById(Integer id);
     ProveedoresEntity add(ProveedoresEntity obj);
-    ProveedoresEntity update(ProveedoresEntity obj, Long id);
-    ProveedoresEntity delete(Long id);
-    ProveedoresEntity enable(Long id);
+    ProveedoresEntity update(ProveedoresEntity obj,Integer id);
+    ProveedoresEntity delete(Integer id);
+    ProveedoresEntity enable(Integer id);
 }

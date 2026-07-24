@@ -19,17 +19,17 @@ public class EmpleadosRestController {
     public List<EmpleadosEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public EmpleadosEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public EmpleadosEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public EmpleadosEntity add(@RequestBody EmpleadosEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public EmpleadosEntity update(@RequestBody EmpleadosEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public EmpleadosEntity update(@RequestBody EmpleadosEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public EmpleadosEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public EmpleadosEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public EmpleadosEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public EmpleadosEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

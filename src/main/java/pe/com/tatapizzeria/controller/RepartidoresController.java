@@ -32,7 +32,7 @@ public class RepartidoresController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarRepartidores(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarRepartidores(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
         modelo.addAttribute("repartidores", servicio.findById(id));
         return "repartidores/actualizarrepartidores";
@@ -45,7 +45,7 @@ public class RepartidoresController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarRepartidores(@PathVariable Long id) {
+    public String EliminarRepartidores(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/repartidores/listar";
     }
@@ -67,7 +67,7 @@ public class RepartidoresController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarRepartidores(@ModelAttribute("repartidor") RepartidoresEntity obj, @PathVariable Long id) {
+    public String ActualizarRepartidores(@ModelAttribute("repartidor") RepartidoresEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/repartidores/listar";
     }

@@ -19,17 +19,17 @@ public class CombosPromocionesRestController {
     public List<CombosPromocionesEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public CombosPromocionesEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public CombosPromocionesEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public CombosPromocionesEntity add(@RequestBody CombosPromocionesEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public CombosPromocionesEntity update(@RequestBody CombosPromocionesEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public CombosPromocionesEntity update(@RequestBody CombosPromocionesEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public CombosPromocionesEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public CombosPromocionesEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public CombosPromocionesEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public CombosPromocionesEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -19,17 +19,17 @@ public class CategoriasProductoRestController {
     public List<CategoriasProductoEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public CategoriasProductoEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public CategoriasProductoEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public CategoriasProductoEntity add(@RequestBody CategoriasProductoEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public CategoriasProductoEntity update(@RequestBody CategoriasProductoEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public CategoriasProductoEntity update(@RequestBody CategoriasProductoEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public CategoriasProductoEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public CategoriasProductoEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public CategoriasProductoEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public CategoriasProductoEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

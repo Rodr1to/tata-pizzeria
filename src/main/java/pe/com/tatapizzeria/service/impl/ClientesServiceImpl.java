@@ -23,7 +23,7 @@ public class ClientesServiceImpl implements ClientesService {
     public List<ClientesEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public ClientesEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public ClientesEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public ClientesEntity add(ClientesEntity obj) {
@@ -33,7 +33,7 @@ public class ClientesServiceImpl implements ClientesService {
     }
     
     @Override
-    public ClientesEntity update(ClientesEntity obj, Long id) {
+    public ClientesEntity update(ClientesEntity obj, Integer id) {
         ClientesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -43,7 +43,7 @@ public class ClientesServiceImpl implements ClientesService {
     }
 
     @Override
-    public ClientesEntity delete(Long id) {
+    public ClientesEntity delete(Integer id) {
         ClientesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -53,7 +53,7 @@ public class ClientesServiceImpl implements ClientesService {
     }
 
     @Override
-    public ClientesEntity enable(Long id) {
+    public ClientesEntity enable(Integer id) {
         ClientesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

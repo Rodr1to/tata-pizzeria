@@ -16,7 +16,7 @@ public class DetallePedidosEntity implements Serializable {
     @Id
     @Column(name = "id_detalle")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false)

@@ -40,7 +40,7 @@ public class DetallePedidosController {
     }
 
     @GetMapping("/registroConPedido/{idPedido}")
-    public String MostrarRegistrarDetallesConPedido(Model modelo, @PathVariable Long idPedido) {
+    public String MostrarRegistrarDetallesConPedido(Model modelo, @PathVariable Integer idPedido) {
         modelo.addAttribute("idPedidoSeleccionado", idPedido);
         modelo.addAttribute("listarvariantes", servicioVariante.findAllCustom());
         modelo.addAttribute("listarbordes", servicioBorde.findAllCustom());
@@ -48,7 +48,7 @@ public class DetallePedidosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarDetalles(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarDetalles(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("detalles", servicio.findById(id));
         modelo.addAttribute("listarvariantes", servicioVariante.findAllCustom());
         modelo.addAttribute("listarbordes", servicioBorde.findAllCustom());
@@ -56,9 +56,9 @@ public class DetallePedidosController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarDetalles(@PathVariable Long id) {
+    public String EliminarDetalles(@PathVariable Integer id) {
         var detalle = servicio.findById(id);
-        Long idPedido = detalle.getPedido().getId();
+        Integer idPedido = detalle.getPedido().getId();
         servicio.delete(id);
         // Recalcular montos después de eliminar
         servicioPedido.recalcularMontos(idPedido);
@@ -79,7 +79,7 @@ public class DetallePedidosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarDetalles(@ModelAttribute("detalle") DetallePedidosEntity obj, @PathVariable Long id) {
+    public String ActualizarDetalles(@ModelAttribute("detalle") DetallePedidosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/pedidos/detalles/" + obj.getPedido().getId();
     }
@@ -91,13 +91,13 @@ public class DetallePedidosController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarDetalles(@PathVariable Long id) {
+    public String HabilitarDetalles(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/detalles/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarDetalles(@PathVariable Long id) {
+    public String DeshabilitarDetalles(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/detalles/habilita";
     }

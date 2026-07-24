@@ -33,14 +33,14 @@ public class ProductosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarProductos(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarProductos(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarcategorias", servicioCat.findAllCustom());
         modelo.addAttribute("productos", servicio.findById(id));
         return "productos/actualizarproductos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarProductos(@PathVariable Long id) {
+    public String EliminarProductos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/productos/listar";
     }
@@ -60,7 +60,7 @@ public class ProductosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarProductos(@ModelAttribute("producto") ProductosEntity obj, @PathVariable Long id) {
+    public String ActualizarProductos(@ModelAttribute("producto") ProductosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/productos/listar";
     }
@@ -72,13 +72,13 @@ public class ProductosController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarProductos(@PathVariable Long id) {
+    public String HabilitarProductos(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/productos/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarProductos(@PathVariable Long id) {
+    public String DeshabilitarProductos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/productos/habilita";
     }

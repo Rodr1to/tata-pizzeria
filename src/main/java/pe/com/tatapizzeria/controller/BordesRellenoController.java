@@ -27,13 +27,13 @@ public class BordesRellenoController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarBordes(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarBordes(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("bordes", servicio.findById(id));
         return "bordes/actualizarbordes";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarBordes(@PathVariable Long id) {
+    public String EliminarBordes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/bordes/listar";
     }
@@ -55,7 +55,7 @@ public class BordesRellenoController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarBordes(@ModelAttribute("borde") BordesRellenoEntity obj, @PathVariable Long id) {
+    public String ActualizarBordes(@ModelAttribute("borde") BordesRellenoEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/bordes/listar";
     }
@@ -67,13 +67,13 @@ public class BordesRellenoController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarBordes(@PathVariable Long id) {
+    public String HabilitarBordes(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/bordes/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarBordes(@PathVariable Long id) {
+    public String DeshabilitarBordes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/bordes/habilita";
     }

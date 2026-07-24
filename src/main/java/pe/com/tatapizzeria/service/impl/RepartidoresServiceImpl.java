@@ -23,7 +23,7 @@ public class RepartidoresServiceImpl implements RepartidoresService {
     public List<RepartidoresEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public RepartidoresEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public RepartidoresEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public RepartidoresEntity add(RepartidoresEntity obj) {
@@ -34,7 +34,7 @@ public class RepartidoresServiceImpl implements RepartidoresService {
     }
 
     @Override
-    public RepartidoresEntity update(RepartidoresEntity obj, Long id) {
+    public RepartidoresEntity update(RepartidoresEntity obj, Integer id) {
         RepartidoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -44,7 +44,7 @@ public class RepartidoresServiceImpl implements RepartidoresService {
     }
 
     @Override
-    public RepartidoresEntity delete(Long id) {
+    public RepartidoresEntity delete(Integer id) {
         RepartidoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -54,7 +54,7 @@ public class RepartidoresServiceImpl implements RepartidoresService {
     }
 
     @Override
-    public RepartidoresEntity enable(Long id) {
+    public RepartidoresEntity enable(Integer id) {
         RepartidoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

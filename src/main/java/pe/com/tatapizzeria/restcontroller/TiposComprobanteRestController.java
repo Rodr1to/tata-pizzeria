@@ -19,17 +19,17 @@ public class TiposComprobanteRestController {
     public List<TiposComprobanteEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public TiposComprobanteEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public TiposComprobanteEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public TiposComprobanteEntity add(@RequestBody TiposComprobanteEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public TiposComprobanteEntity update(@RequestBody TiposComprobanteEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public TiposComprobanteEntity update(@RequestBody TiposComprobanteEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public TiposComprobanteEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public TiposComprobanteEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public TiposComprobanteEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public TiposComprobanteEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -7,16 +7,16 @@ import pe.com.tatapizzeria.entity.DireccionesClienteEntity;
 import java.util.List;
 
 @Repository
-public interface DireccionesClienteRepository extends JpaRepository<DireccionesClienteEntity, Long> {
+public interface DireccionesClienteRepository extends JpaRepository<DireccionesClienteEntity, Integer> {
 
     @Query("SELECT d FROM DireccionesClienteEntity d WHERE d.estado = true")
     List<DireccionesClienteEntity> findAllCustom();
 
     //  Buscar direcciones por cliente
     @Query("SELECT d FROM DireccionesClienteEntity d WHERE d.cliente.id = ?1 AND d.estado = true")
-    List<DireccionesClienteEntity> findByClienteId(Long idCliente);
+    List<DireccionesClienteEntity> findByClienteId(Integer idCliente);
     
     // Buscar todas las direcciones de un cliente (incluyendo inactivas)
     @Query("SELECT d FROM DireccionesClienteEntity d WHERE d.cliente.id = ?1")
-    List<DireccionesClienteEntity> findAllByClienteId(Long idCliente);
+    List<DireccionesClienteEntity> findAllByClienteId(Integer idCliente);
 }

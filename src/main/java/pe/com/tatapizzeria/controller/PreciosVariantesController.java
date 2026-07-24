@@ -37,7 +37,7 @@ public class PreciosVariantesController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarVariantes(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarVariantes(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarproductos", servicioPro.findAllCustom());
         modelo.addAttribute("listartamanos", servicioTam.findAllCustom());
         modelo.addAttribute("variantes", servicio.findById(id));
@@ -45,7 +45,7 @@ public class PreciosVariantesController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarVariantes(@PathVariable Long id) {
+    public String EliminarVariantes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/variantes/listar";
     }
@@ -66,7 +66,7 @@ public class PreciosVariantesController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarVariantes(@ModelAttribute("variante") PreciosVariantesEntity obj, @PathVariable Long id) {
+    public String ActualizarVariantes(@ModelAttribute("variante") PreciosVariantesEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/variantes/listar";
     }
@@ -78,13 +78,13 @@ public class PreciosVariantesController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarVariantes(@PathVariable Long id) {
+    public String HabilitarVariantes(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/variantes/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarVariantes(@PathVariable Long id) {
+    public String DeshabilitarVariantes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/variantes/habilita";
     }

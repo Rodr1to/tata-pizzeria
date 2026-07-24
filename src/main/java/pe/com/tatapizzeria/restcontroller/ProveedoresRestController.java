@@ -19,17 +19,17 @@ public class ProveedoresRestController {
     public List<ProveedoresEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public ProveedoresEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public ProveedoresEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public ProveedoresEntity add(@RequestBody ProveedoresEntity obj) { return s.add(obj); }
 
     @PutMapping("/{id}")
-    public ProveedoresEntity update(@RequestBody ProveedoresEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public ProveedoresEntity update(@RequestBody ProveedoresEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public ProveedoresEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public ProveedoresEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public ProveedoresEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public ProveedoresEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -21,13 +21,13 @@ public class ComprobantesPagoServiceImpl implements ComprobantesPagoService {
     public List<ComprobantesPagoEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public ComprobantesPagoEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public ComprobantesPagoEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public ComprobantesPagoEntity add(ComprobantesPagoEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public ComprobantesPagoEntity update(ComprobantesPagoEntity obj, Long id) {
+    public ComprobantesPagoEntity update(ComprobantesPagoEntity obj, Integer id) {
         ComprobantesPagoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class ComprobantesPagoServiceImpl implements ComprobantesPagoService {
     }
 
     @Override
-    public ComprobantesPagoEntity delete(Long id) {
+    public ComprobantesPagoEntity delete(Integer id) {
         ComprobantesPagoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class ComprobantesPagoServiceImpl implements ComprobantesPagoService {
     }
 
     @Override
-    public ComprobantesPagoEntity enable(Long id) {
+    public ComprobantesPagoEntity enable(Integer id) {
         ComprobantesPagoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

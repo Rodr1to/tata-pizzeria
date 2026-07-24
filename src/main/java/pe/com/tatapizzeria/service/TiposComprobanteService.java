@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.TiposComprobanteEntity;
 public interface TiposComprobanteService {
     List<TiposComprobanteEntity> findAll();
     List<TiposComprobanteEntity> findAllCustom();
-    TiposComprobanteEntity findById(Long id);
+    TiposComprobanteEntity findById(Integer id);
     TiposComprobanteEntity add(TiposComprobanteEntity obj);
-    TiposComprobanteEntity update(TiposComprobanteEntity obj, Long id);
-    TiposComprobanteEntity delete(Long id);
-    TiposComprobanteEntity enable(Long id);
+    TiposComprobanteEntity update(TiposComprobanteEntity obj,Integer id);
+    TiposComprobanteEntity delete(Integer id);
+    TiposComprobanteEntity enable(Integer id);
 }

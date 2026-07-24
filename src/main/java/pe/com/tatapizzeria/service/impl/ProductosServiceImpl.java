@@ -21,13 +21,13 @@ public class ProductosServiceImpl implements ProductosService {
     public List<ProductosEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public ProductosEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public ProductosEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public ProductosEntity add(ProductosEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public ProductosEntity update(ProductosEntity obj, Long id) {
+    public ProductosEntity update(ProductosEntity obj, Integer id) {
         ProductosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class ProductosServiceImpl implements ProductosService {
     }
 
     @Override
-    public ProductosEntity delete(Long id) {
+    public ProductosEntity delete(Integer id) {
         ProductosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class ProductosServiceImpl implements ProductosService {
     }
 
     @Override
-    public ProductosEntity enable(Long id) {
+    public ProductosEntity enable(Integer id) {
         ProductosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

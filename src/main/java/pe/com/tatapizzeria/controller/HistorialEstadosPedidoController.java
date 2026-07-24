@@ -27,7 +27,7 @@ public class HistorialEstadosPedidoController {
 
     // 🔥 Ver historial COMPLETO de un pedido específico
     @GetMapping("/pedido/{idPedido}")
-    public String MostrarHistorialPorPedido(Model modelo, @PathVariable Long idPedido) {
+    public String MostrarHistorialPorPedido(Model modelo, @PathVariable Integer idPedido) {
         var pedido = pedidosService.findById(idPedido);
         modelo.addAttribute("pedido", pedido);
         // 🔥 CORREGIDO: Usar findByPedidoId para obtener TODOS los estados

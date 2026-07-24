@@ -28,13 +28,13 @@ public class TamanosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarTamanos(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarTamanos(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("tamanos", servicio.findById(id));
         return "tamanos/actualizartamanos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarTamanos(@PathVariable Long id) {
+    public String EliminarTamanos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/tamanos/listar";
     }
@@ -64,7 +64,7 @@ public class TamanosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarTamanos(@ModelAttribute("tamano") TamanosEntity obj, @PathVariable Long id) {
+    public String ActualizarTamanos(@ModelAttribute("tamano") TamanosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/tamanos/listar";
     }
@@ -77,13 +77,13 @@ public class TamanosController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarTamanos(@PathVariable Long id) {
+    public String HabilitarTamanos(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/tamanos/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarTamanos(@PathVariable Long id) {
+    public String DeshabilitarTamanos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/tamanos/habilita";
     }

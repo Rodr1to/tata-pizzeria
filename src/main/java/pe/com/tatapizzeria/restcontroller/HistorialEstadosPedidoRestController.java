@@ -16,7 +16,7 @@ public class HistorialEstadosPedidoRestController {
     public List<HistorialEstadosPedidoEntity> findAll() { return s.findAll(); }
 
     @GetMapping("/{id}")
-    public HistorialEstadosPedidoEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public HistorialEstadosPedidoEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public HistorialEstadosPedidoEntity add(@RequestBody HistorialEstadosPedidoEntity o) { return s.add(o); }

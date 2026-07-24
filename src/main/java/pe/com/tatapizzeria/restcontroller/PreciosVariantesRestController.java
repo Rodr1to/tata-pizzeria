@@ -19,17 +19,17 @@ public class PreciosVariantesRestController {
     public List<PreciosVariantesEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public PreciosVariantesEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public PreciosVariantesEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public PreciosVariantesEntity add(@RequestBody PreciosVariantesEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public PreciosVariantesEntity update(@RequestBody PreciosVariantesEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public PreciosVariantesEntity update(@RequestBody PreciosVariantesEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public PreciosVariantesEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public PreciosVariantesEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public PreciosVariantesEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public PreciosVariantesEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -41,7 +41,7 @@ public class PedidosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarPedidos(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarPedidos(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarclientes", servicioCli.findAllCustom());
         modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
         modelo.addAttribute("listarusuarios", servicioUsu.findAllCustom()); 
@@ -50,14 +50,14 @@ public class PedidosController {
     }
 
     @GetMapping("/detalles/{id}")
-    public String MostrarDetallesPedido(Model modelo, @PathVariable Long id) {
+    public String MostrarDetallesPedido(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("pedido", servicio.findById(id));
         modelo.addAttribute("listardetalles", servicioDetalle.findByPedidoId(id));
         return "pedidos/detallepedido";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarPedidos(@PathVariable Long id) {
+    public String EliminarPedidos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/pedidos/listar";
     }
@@ -79,7 +79,7 @@ public class PedidosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarPedidos(@ModelAttribute("pedido") PedidosEntity obj, @PathVariable Long id) {
+    public String ActualizarPedidos(@ModelAttribute("pedido") PedidosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/pedidos/detalles/" + id;
     }
@@ -91,13 +91,13 @@ public class PedidosController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarPedidos(@PathVariable Long id) {
+    public String HabilitarPedidos(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/pedidos/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarPedidos(@PathVariable Long id) {
+    public String DeshabilitarPedidos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/pedidos/habilita";
     }

@@ -19,17 +19,17 @@ public class SedesRestController {
     public List<SedesEntity> findAllCustomer() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public SedesEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public SedesEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public SedesEntity add(@RequestBody SedesEntity obj) { return s.add(obj); }
 
     @PutMapping("/{id}")
-    public SedesEntity uupdate(@RequestBody SedesEntity obj, @PathVariable Long id) { return s.update(obj, id); }
+    public SedesEntity uupdate(@RequestBody SedesEntity obj, @PathVariable Integer id) { return s.update(obj, id); }
 
     @DeleteMapping("/{id}")
-    public SedesEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public SedesEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public SedesEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public SedesEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

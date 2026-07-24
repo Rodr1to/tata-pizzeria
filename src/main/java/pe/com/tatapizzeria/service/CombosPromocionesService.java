@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.CombosPromocionesEntity;
 public interface CombosPromocionesService {
     List<CombosPromocionesEntity> findAll();
     List<CombosPromocionesEntity> findAllCustom();
-    CombosPromocionesEntity findById(Long id);
+    CombosPromocionesEntity findById(Integer id);
     CombosPromocionesEntity add(CombosPromocionesEntity obj);
-    CombosPromocionesEntity update(CombosPromocionesEntity obj, Long id);
-    CombosPromocionesEntity delete(Long id);
-    CombosPromocionesEntity enable(Long id);
+    CombosPromocionesEntity update(CombosPromocionesEntity obj,Integer id);
+    CombosPromocionesEntity delete(Integer id);
+    CombosPromocionesEntity enable(Integer id);
 }

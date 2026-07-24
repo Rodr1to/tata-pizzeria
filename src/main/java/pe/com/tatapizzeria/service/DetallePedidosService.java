@@ -6,10 +6,10 @@ import pe.com.tatapizzeria.entity.DetallePedidosEntity;
 public interface DetallePedidosService {
     List<DetallePedidosEntity> findAll();
     List<DetallePedidosEntity> findAllCustom();
-    DetallePedidosEntity findById(Long id);
+    DetallePedidosEntity findById(Integer id);
     DetallePedidosEntity add(DetallePedidosEntity obj);
-    DetallePedidosEntity update(DetallePedidosEntity obj, Long id);
-    DetallePedidosEntity delete(Long id);
-    DetallePedidosEntity enable(Long id);
-    List<DetallePedidosEntity> findByPedidoId(Long idPedido);
+    DetallePedidosEntity update(DetallePedidosEntity obj,Integer id);
+    DetallePedidosEntity delete(Integer id);
+    DetallePedidosEntity enable(Integer id);
+    List<DetallePedidosEntity> findByPedidoId(Integer idPedido);
 }

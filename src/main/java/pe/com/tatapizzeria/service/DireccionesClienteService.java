@@ -6,12 +6,12 @@ import pe.com.tatapizzeria.entity.DireccionesClienteEntity;
 public interface DireccionesClienteService {
     List<DireccionesClienteEntity> findAll();
     List<DireccionesClienteEntity> findAllCustom();
-    DireccionesClienteEntity findById(Long id);
+    DireccionesClienteEntity findById(Integer id);
     DireccionesClienteEntity add(DireccionesClienteEntity obj);
-    DireccionesClienteEntity update(DireccionesClienteEntity obj, Long id);
-    DireccionesClienteEntity delete(Long id);
-    DireccionesClienteEntity enable(Long id);
+    DireccionesClienteEntity update(DireccionesClienteEntity obj,Integer id);
+    DireccionesClienteEntity delete(Integer id);
+    DireccionesClienteEntity enable(Integer id);
     
-    List<DireccionesClienteEntity> findByClienteId(Long idCliente);
+    List<DireccionesClienteEntity> findByClienteId(Integer idCliente);
 
 }

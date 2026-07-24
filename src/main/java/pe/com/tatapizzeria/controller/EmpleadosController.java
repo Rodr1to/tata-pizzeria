@@ -32,7 +32,7 @@ public class EmpleadosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarEmpleados(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarEmpleados(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarsedes", servicioSede.findAllCustom());
         modelo.addAttribute("empleados", servicio.findById(id));
         return "empleados/actualizarempleados";
@@ -45,19 +45,19 @@ public class EmpleadosController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarEmpleados(@PathVariable Long id) {
+    public String EliminarEmpleados(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/empleados/listar";
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarEmpleados(@PathVariable Long id) {
+    public String HabilitarEmpleados(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/empleados/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarEmpleados(@PathVariable Long id) {
+    public String DeshabilitarEmpleados(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/empleados/habilita";
     }
@@ -78,7 +78,7 @@ public class EmpleadosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarEmpleados(@ModelAttribute("empleado") EmpleadosEntity obj, @PathVariable Long id) {
+    public String ActualizarEmpleados(@ModelAttribute("empleado") EmpleadosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/empleados/listar";
     }

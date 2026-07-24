@@ -28,13 +28,13 @@ public class TiposComprobanteController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarTipos(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarTipos(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("tiposcomprobante", servicio.findById(id));
         return "tiposcomprobante/actualizartipos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarTipos(@PathVariable Long id) {
+    public String EliminarTipos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/tiposcomprobante/listar";
     }
@@ -57,7 +57,7 @@ public class TiposComprobanteController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarTipos(@ModelAttribute("tipo") TiposComprobanteEntity obj, @PathVariable Long id) {
+    public String ActualizarTipos(@ModelAttribute("tipo") TiposComprobanteEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/tiposcomprobante/listar";
     }
@@ -69,13 +69,13 @@ public class TiposComprobanteController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarTipos(@PathVariable Long id) {
+    public String HabilitarTipos(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/tiposcomprobante/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarTipos(@PathVariable Long id) {
+    public String DeshabilitarTipos(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/tiposcomprobante/habilita";
     }

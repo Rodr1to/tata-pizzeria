@@ -39,12 +39,12 @@ public class EstadosPedidoController {
         
         // Si no hay usuarios, crear uno temporal (solo para evitar el error)
         UsuariosEntity usuarioTemporal = new UsuariosEntity();
-        usuarioTemporal.setId(1L);
+        usuarioTemporal.setId(1);
         return usuarioTemporal;
     }
 
     @GetMapping("/cambiar/{idPedido}")
-    public String MostrarCambiarEstado(Model modelo, @PathVariable Long idPedido) {
+    public String MostrarCambiarEstado(Model modelo, @PathVariable Integer idPedido) {
         var pedido = pedidosService.findById(idPedido);
         modelo.addAttribute("pedido", pedido);
         
@@ -58,9 +58,10 @@ public class EstadosPedidoController {
     }
 
     @PostMapping("/cambiar")
-    public String CambiarEstado(@RequestParam Long idPedido, 
-                                @RequestParam String nuevoEstado,
-                                @RequestParam(required = false) String observacion) {
+    public String CambiarEstado(
+            @RequestParam Integer idPedido,
+            @RequestParam String nuevoEstado,
+            @RequestParam(required = false) String observacion) {
         var pedido = pedidosService.findById(idPedido);
         if (pedido == null) {
             return "redirect:/pedidos/listar";

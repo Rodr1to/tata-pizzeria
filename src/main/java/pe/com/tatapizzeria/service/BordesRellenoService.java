@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.BordesRellenoEntity;
 public interface BordesRellenoService {
     List<BordesRellenoEntity> findAll();
     List<BordesRellenoEntity> findAllCustom();
-    BordesRellenoEntity findById(Long id);
+    BordesRellenoEntity findById(Integer id);
     BordesRellenoEntity add(BordesRellenoEntity obj);
-    BordesRellenoEntity update(BordesRellenoEntity obj, Long id);
-    BordesRellenoEntity delete(Long id);
-    BordesRellenoEntity enable(Long id);
+    BordesRellenoEntity update(BordesRellenoEntity obj,Integer id);
+    BordesRellenoEntity delete(Integer id);
+    BordesRellenoEntity enable(Integer id);
 }

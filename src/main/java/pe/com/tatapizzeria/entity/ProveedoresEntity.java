@@ -18,7 +18,7 @@ public class ProveedoresEntity implements Serializable {
     @Id
     @Column(name = "id_proveedor")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "ruc", length = 11, nullable = false, unique = true)
     private String ruc;

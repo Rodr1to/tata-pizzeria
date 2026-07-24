@@ -21,13 +21,13 @@ public class PreciosVariantesServiceImpl implements PreciosVariantesService {
     public List<PreciosVariantesEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public PreciosVariantesEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public PreciosVariantesEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public PreciosVariantesEntity add(PreciosVariantesEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public PreciosVariantesEntity update(PreciosVariantesEntity obj, Long id) {
+    public PreciosVariantesEntity update(PreciosVariantesEntity obj, Integer id) {
         PreciosVariantesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class PreciosVariantesServiceImpl implements PreciosVariantesService {
     }
 
     @Override
-    public PreciosVariantesEntity delete(Long id) {
+    public PreciosVariantesEntity delete(Integer id) {
         PreciosVariantesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class PreciosVariantesServiceImpl implements PreciosVariantesService {
     }
 
     @Override
-    public PreciosVariantesEntity enable(Long id) {
+    public PreciosVariantesEntity enable(Integer id) {
         PreciosVariantesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);
