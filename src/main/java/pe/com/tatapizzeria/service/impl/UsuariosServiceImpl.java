@@ -21,13 +21,13 @@ public class UsuariosServiceImpl implements UsuariosService {
     public List<UsuariosEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public UsuariosEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public UsuariosEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public UsuariosEntity add(UsuariosEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public UsuariosEntity update(UsuariosEntity obj, Long id) {
+    public UsuariosEntity update(UsuariosEntity obj, Integer id) {
         UsuariosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -37,7 +37,7 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
-    public UsuariosEntity delete(Long id) {
+    public UsuariosEntity delete(Integer id) {
         UsuariosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
-    public UsuariosEntity enable(Long id) {
+    public UsuariosEntity enable(Integer id) {
         UsuariosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

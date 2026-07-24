@@ -21,13 +21,13 @@ public class CombosPromocionesServiceImpl implements CombosPromocionesService {
     public List<CombosPromocionesEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public CombosPromocionesEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public CombosPromocionesEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public CombosPromocionesEntity add(CombosPromocionesEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public CombosPromocionesEntity update(CombosPromocionesEntity obj, Long id) {
+    public CombosPromocionesEntity update(CombosPromocionesEntity obj, Integer id) {
         CombosPromocionesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class CombosPromocionesServiceImpl implements CombosPromocionesService {
     }
 
     @Override
-    public CombosPromocionesEntity delete(Long id) {
+    public CombosPromocionesEntity delete(Integer id) {
         CombosPromocionesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class CombosPromocionesServiceImpl implements CombosPromocionesService {
     }
 
     @Override
-    public CombosPromocionesEntity enable(Long id) {
+    public CombosPromocionesEntity enable(Integer id) {
         CombosPromocionesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

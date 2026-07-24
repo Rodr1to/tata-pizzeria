@@ -21,13 +21,13 @@ public class ProveedoresServiceImpl implements ProveedoresService {
     public List<ProveedoresEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public ProveedoresEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public ProveedoresEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public ProveedoresEntity add(ProveedoresEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public ProveedoresEntity update(ProveedoresEntity obj, Long id) {
+    public ProveedoresEntity update(ProveedoresEntity obj, Integer id) {
         ProveedoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -37,7 +37,7 @@ public class ProveedoresServiceImpl implements ProveedoresService {
     }
 
     @Override
-    public ProveedoresEntity delete(Long id) {
+    public ProveedoresEntity delete(Integer id) {
         ProveedoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class ProveedoresServiceImpl implements ProveedoresService {
     }
 
     @Override
-    public ProveedoresEntity enable(Long id) {
+    public ProveedoresEntity enable(Integer id) {
         ProveedoresEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

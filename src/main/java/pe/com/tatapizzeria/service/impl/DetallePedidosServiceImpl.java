@@ -29,7 +29,7 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
     }
 
     @Override
-    public DetallePedidosEntity findById(Long id) {
+    public DetallePedidosEntity findById(Integer id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -44,7 +44,7 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
 
     @Override
     @Transactional
-    public DetallePedidosEntity update(DetallePedidosEntity obj, Long id) {
+    public DetallePedidosEntity update(DetallePedidosEntity obj, Integer id) {
         obj.setId(id);
         var detalleActualizado = repository.save(obj);
         // Recalcular montos del pedido después de actualizar
@@ -54,7 +54,7 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
 
     @Override
     @Transactional
-    public DetallePedidosEntity delete(Long id) {
+    public DetallePedidosEntity delete(Integer id) {
         var obj = findById(id);
         if (obj != null) {
             obj.setEstado(false);
@@ -68,7 +68,7 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
 
     @Override
     @Transactional
-    public DetallePedidosEntity enable(Long id) {
+    public DetallePedidosEntity enable(Integer id) {
         var obj = findById(id);
         if (obj != null) {
             obj.setEstado(true);
@@ -81,7 +81,7 @@ public class DetallePedidosServiceImpl implements DetallePedidosService {
     }
 
     @Override
-    public List<DetallePedidosEntity> findByPedidoId(Long idPedido) {
+    public List<DetallePedidosEntity> findByPedidoId(Integer idPedido) {
         return repository.findByPedidoId(idPedido);
     }
 }

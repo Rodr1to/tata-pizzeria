@@ -33,7 +33,7 @@ public class UsuariosController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarUsuarios(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarUsuarios(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarempleados", servicioEmp.findAllCustom());
         modelo.addAttribute("usuarios", servicio.findById(id));
         return "usuarios/actualizarusuarios";
@@ -46,19 +46,19 @@ public class UsuariosController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarUsuarios(@PathVariable Long id) {
+    public String EliminarUsuarios(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/usuarios/listar";
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarUsuarios(@PathVariable Long id) {
+    public String HabilitarUsuarios(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/usuarios/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarUsuarios(@PathVariable Long id) {
+    public String DeshabilitarUsuarios(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/usuarios/habilita";
     }
@@ -79,7 +79,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarUsuarios(@ModelAttribute("usuario") UsuariosEntity obj, @PathVariable Long id) {
+    public String ActualizarUsuarios(@ModelAttribute("usuario") UsuariosEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/usuarios/listar";
     }

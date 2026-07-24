@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import pe.com.tatapizzeria.entity.BordesRellenoEntity;
 import java.util.List;
 
-public interface BordesRellenoRepository extends JpaRepository<BordesRellenoEntity, Long> {
+public interface BordesRellenoRepository extends JpaRepository<BordesRellenoEntity, Integer> {
 
     @Query("SELECT s FROM BordesRellenoEntity s WHERE s.estado = true")
     List<BordesRellenoEntity> findAllCustom();

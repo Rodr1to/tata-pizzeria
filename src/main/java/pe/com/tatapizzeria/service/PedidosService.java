@@ -6,13 +6,13 @@ import pe.com.tatapizzeria.entity.PedidosEntity;
 public interface PedidosService {
     List<PedidosEntity> findAll();
     List<PedidosEntity> findAllCustom();
-    PedidosEntity findById(Long id);
+    PedidosEntity findById(Integer id);
     PedidosEntity add(PedidosEntity obj);
-    PedidosEntity update(PedidosEntity obj, Long id);
-    PedidosEntity delete(Long id);
-    PedidosEntity enable(Long id);
+    PedidosEntity update(PedidosEntity obj,Integer id);
+    PedidosEntity delete(Integer id);
+    PedidosEntity enable(Integer id);
     
     
     // Recalcular montos
-    PedidosEntity recalcularMontos(Long idPedido);
+    PedidosEntity recalcularMontos(Integer idPedido);
 }

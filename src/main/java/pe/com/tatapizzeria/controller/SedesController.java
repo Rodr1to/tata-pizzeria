@@ -28,7 +28,7 @@ public class SedesController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarSedes(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarSedes(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("sedes", servicio.findById(id));
         return "sedes/actualizarsedes";
     }
@@ -40,19 +40,19 @@ public class SedesController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarSedes(@PathVariable Long id) {
+    public String EliminarSedes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/sedes/listar";
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarSedes(@PathVariable Long id) {
+    public String HabilitarSedes(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/sedes/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarSedes(@PathVariable Long id) {
+    public String DeshabilitarSedes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/sedes/habilita";
     }
@@ -75,7 +75,7 @@ public class SedesController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarSedes(@ModelAttribute("sede") SedesEntity obj, @PathVariable Long id) {
+    public String ActualizarSedes(@ModelAttribute("sede") SedesEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/sedes/listar";
     }

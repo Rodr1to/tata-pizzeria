@@ -21,13 +21,13 @@ public class SedesServiceImpl implements SedesService {
     public List<SedesEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public SedesEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public SedesEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public SedesEntity add(SedesEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public SedesEntity update(SedesEntity obj, Long id) {
+    public SedesEntity update(SedesEntity obj, Integer id) {
         SedesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -37,7 +37,7 @@ public class SedesServiceImpl implements SedesService {
     }
 
     @Override
-    public SedesEntity delete(Long id) {
+    public SedesEntity delete(Integer id) {
         SedesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class SedesServiceImpl implements SedesService {
     }
 
     @Override
-    public SedesEntity enable(Long id) {
+    public SedesEntity enable(Integer id) {
         SedesEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

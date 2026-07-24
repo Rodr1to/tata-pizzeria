@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.UsuariosEntity;
 public interface UsuariosService {
     List<UsuariosEntity> findAll();
     List<UsuariosEntity> findAllCustom();
-    UsuariosEntity findById(Long id);
+    UsuariosEntity findById(Integer id);
     UsuariosEntity add(UsuariosEntity obj);
-    UsuariosEntity update(UsuariosEntity obj, Long id);
-    UsuariosEntity delete(Long id);
-    UsuariosEntity enable(Long id);
+    UsuariosEntity update(UsuariosEntity obj,Integer id);
+    UsuariosEntity delete(Integer id);
+    UsuariosEntity enable(Integer id);
 }

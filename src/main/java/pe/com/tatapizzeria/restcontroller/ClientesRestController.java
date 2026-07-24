@@ -19,17 +19,17 @@ public class ClientesRestController {
     public List<ClientesEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public ClientesEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public ClientesEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public ClientesEntity add(@RequestBody ClientesEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public ClientesEntity update(@RequestBody ClientesEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public ClientesEntity update(@RequestBody ClientesEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public ClientesEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public ClientesEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public ClientesEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public ClientesEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

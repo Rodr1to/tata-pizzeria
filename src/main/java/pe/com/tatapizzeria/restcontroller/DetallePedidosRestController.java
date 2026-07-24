@@ -19,17 +19,17 @@ public class DetallePedidosRestController {
     public List<DetallePedidosEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public DetallePedidosEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public DetallePedidosEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public DetallePedidosEntity add(@RequestBody DetallePedidosEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public DetallePedidosEntity update(@RequestBody DetallePedidosEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public DetallePedidosEntity update(@RequestBody DetallePedidosEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public DetallePedidosEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public DetallePedidosEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public DetallePedidosEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public DetallePedidosEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

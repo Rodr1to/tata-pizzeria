@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.ProductosEntity;
 public interface ProductosService {
     List<ProductosEntity> findAll();
     List<ProductosEntity> findAllCustom();
-    ProductosEntity findById(Long id);
+    ProductosEntity findById(Integer id);
     ProductosEntity add(ProductosEntity obj);
-    ProductosEntity update(ProductosEntity obj, Long id);
-    ProductosEntity delete(Long id);
-    ProductosEntity enable(Long id);
+    ProductosEntity update(ProductosEntity obj,Integer id);
+    ProductosEntity delete(Integer id);
+    ProductosEntity enable(Integer id);
 }

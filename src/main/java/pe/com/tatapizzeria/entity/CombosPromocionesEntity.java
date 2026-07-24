@@ -17,7 +17,7 @@ public class CombosPromocionesEntity implements Serializable {
     @Id
     @Column(name = "id_combo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombre_combo", length = 100, nullable = false)
     private String nombreCombo;

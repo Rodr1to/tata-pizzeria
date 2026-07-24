@@ -19,17 +19,17 @@ public class DireccionesClienteRestController {
     public List<DireccionesClienteEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public DireccionesClienteEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public DireccionesClienteEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public DireccionesClienteEntity add(@RequestBody DireccionesClienteEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public DireccionesClienteEntity update(@RequestBody DireccionesClienteEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public DireccionesClienteEntity update(@RequestBody DireccionesClienteEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public DireccionesClienteEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public DireccionesClienteEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public DireccionesClienteEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public DireccionesClienteEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -25,7 +25,7 @@ public class DireccionesClienteServiceImpl implements DireccionesClienteService 
     }
 
     @Override
-    public DireccionesClienteEntity findById(Long id) { 
+    public DireccionesClienteEntity findById(Integer id) { 
         return repositorio.findById(id).orElse(null); 
     }
 
@@ -35,7 +35,7 @@ public class DireccionesClienteServiceImpl implements DireccionesClienteService 
     }
 
     @Override
-    public DireccionesClienteEntity update(DireccionesClienteEntity obj, Long id) {
+    public DireccionesClienteEntity update(DireccionesClienteEntity obj, Integer id) {
         DireccionesClienteEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id");
@@ -45,7 +45,7 @@ public class DireccionesClienteServiceImpl implements DireccionesClienteService 
     }
 
     @Override
-    public DireccionesClienteEntity delete(Long id) {
+    public DireccionesClienteEntity delete(Integer id) {
         DireccionesClienteEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -55,7 +55,7 @@ public class DireccionesClienteServiceImpl implements DireccionesClienteService 
     }
 
     @Override
-    public DireccionesClienteEntity enable(Long id) {
+    public DireccionesClienteEntity enable(Integer id) {
         DireccionesClienteEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);
@@ -66,7 +66,7 @@ public class DireccionesClienteServiceImpl implements DireccionesClienteService 
 
     // 🔥 NUEVO MÉTODO
     @Override
-    public List<DireccionesClienteEntity> findByClienteId(Long idCliente) {
+    public List<DireccionesClienteEntity> findByClienteId(Integer idCliente) {
         return repositorio.findByClienteId(idCliente);
     }
 }

@@ -40,7 +40,7 @@ public class PedidosServiceImpl implements PedidosService {
     }
 
     @Override
-    public PedidosEntity findById(Long id) {
+    public PedidosEntity findById(Integer id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -77,7 +77,7 @@ public class PedidosServiceImpl implements PedidosService {
 
     @Override
     @Transactional
-    public PedidosEntity update(PedidosEntity obj, Long id) {
+    public PedidosEntity update(PedidosEntity obj, Integer id) {
         var existing = findById(id);
         if (existing != null) {
             existing.setCliente(obj.getCliente());
@@ -102,7 +102,7 @@ public class PedidosServiceImpl implements PedidosService {
 
     @Override
     @Transactional
-    public PedidosEntity delete(Long id) {
+    public PedidosEntity delete(Integer id) {
         var obj = findById(id);
         if (obj != null) {
             obj.setEstado(false);
@@ -115,7 +115,7 @@ public class PedidosServiceImpl implements PedidosService {
 
     @Override
     @Transactional
-    public PedidosEntity enable(Long id) {
+    public PedidosEntity enable(Integer id) {
         var obj = findById(id);
         if (obj != null) {
             obj.setEstado(true);
@@ -129,7 +129,7 @@ public class PedidosServiceImpl implements PedidosService {
     //  MÉTODO: Recalcular montos
     @Override
     @Transactional
-    public PedidosEntity recalcularMontos(Long idPedido) {
+    public PedidosEntity recalcularMontos(Integer idPedido) {
         var pedido = findById(idPedido);
         if (pedido == null) return null;
 

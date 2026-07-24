@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import pe.com.tatapizzeria.entity.UsuariosEntity;
 import java.util.List;
 
-public interface UsuariosRepository extends JpaRepository<UsuariosEntity, Long> {
+public interface UsuariosRepository extends JpaRepository<UsuariosEntity, Integer> {
 
     @Query("SELECT s FROM UsuariosEntity s WHERE s.estado = true")
     List<UsuariosEntity> findAllCustom();

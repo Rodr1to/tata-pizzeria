@@ -29,7 +29,7 @@ public class DireccionesClienteController {
 
     // NUEVO MÉTODO: Listar direcciones por cliente
     @GetMapping("/listarPorCliente/{idCliente}")
-    public String MostrarListarDireccionesPorCliente(Model modelo, @PathVariable Long idCliente) {
+    public String MostrarListarDireccionesPorCliente(Model modelo, @PathVariable Integer idCliente) {
         // Obtener el cliente para mostrar su nombre
         var cliente = servicioCli.findById(idCliente);
         modelo.addAttribute("cliente", cliente);
@@ -41,7 +41,7 @@ public class DireccionesClienteController {
 
     //  NUEVO MÉTODO: Filtrar direcciones por cliente (con parámetro)
     @GetMapping("/filtrar")
-    public String FiltrarDireccionesPorCliente(Model modelo, @RequestParam(required = false) Long idCliente) {
+    public String FiltrarDireccionesPorCliente(Model modelo, @RequestParam(required = false) Integer idCliente) {
         if (idCliente != null && idCliente > 0) {
             var cliente = servicioCli.findById(idCliente);
             modelo.addAttribute("cliente", cliente);
@@ -60,14 +60,14 @@ public class DireccionesClienteController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarDirecciones(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarDirecciones(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("listarclientes", servicioCli.findAllCustom());
         modelo.addAttribute("direcciones", servicio.findById(id));
         return "direcciones/actualizardirecciones";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarDirecciones(@PathVariable Long id) {
+    public String EliminarDirecciones(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/direcciones/listar";
     }
@@ -88,7 +88,7 @@ public class DireccionesClienteController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarDirecciones(@ModelAttribute("direccion") DireccionesClienteEntity obj, @PathVariable Long id) {
+    public String ActualizarDirecciones(@ModelAttribute("direccion") DireccionesClienteEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/direcciones/listar";
     }
@@ -101,13 +101,13 @@ public class DireccionesClienteController {
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarDirecciones(@PathVariable Long id) {
+    public String HabilitarDirecciones(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/direcciones/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarDirecciones(@PathVariable Long id) {
+    public String DeshabilitarDirecciones(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/direcciones/habilita";
     }

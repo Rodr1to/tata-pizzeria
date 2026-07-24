@@ -21,13 +21,13 @@ public class EmpleadosServiceImpl implements EmpleadosService {
     public List<EmpleadosEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public EmpleadosEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public EmpleadosEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public EmpleadosEntity add(EmpleadosEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public EmpleadosEntity update(EmpleadosEntity obj, Long id) {
+    public EmpleadosEntity update(EmpleadosEntity obj, Integer id) {
         EmpleadosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "id", "fechaRegistro");
@@ -37,7 +37,7 @@ public class EmpleadosServiceImpl implements EmpleadosService {
     }
 
     @Override
-    public EmpleadosEntity delete(Long id) {
+    public EmpleadosEntity delete(Integer id) {
         EmpleadosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class EmpleadosServiceImpl implements EmpleadosService {
     }
 
     @Override
-    public EmpleadosEntity enable(Long id) {
+    public EmpleadosEntity enable(Integer id) {
         EmpleadosEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

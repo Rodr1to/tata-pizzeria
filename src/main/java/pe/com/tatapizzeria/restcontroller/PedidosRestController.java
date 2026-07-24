@@ -19,17 +19,17 @@ public class PedidosRestController {
     public List<PedidosEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public PedidosEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public PedidosEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public PedidosEntity add(@RequestBody PedidosEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public PedidosEntity update(@RequestBody PedidosEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public PedidosEntity update(@RequestBody PedidosEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public PedidosEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public PedidosEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public PedidosEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public PedidosEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }

@@ -6,9 +6,9 @@ import pe.com.tatapizzeria.entity.PreciosVariantesEntity;
 public interface PreciosVariantesService {
     List<PreciosVariantesEntity> findAll();
     List<PreciosVariantesEntity> findAllCustom();
-    PreciosVariantesEntity findById(Long id);
+    PreciosVariantesEntity findById(Integer id);
     PreciosVariantesEntity add(PreciosVariantesEntity obj);
-    PreciosVariantesEntity update(PreciosVariantesEntity obj, Long id);
-    PreciosVariantesEntity delete(Long id);
-    PreciosVariantesEntity enable(Long id);
+    PreciosVariantesEntity update(PreciosVariantesEntity obj,Integer id);
+    PreciosVariantesEntity delete(Integer id);
+    PreciosVariantesEntity enable(Integer id);
 }

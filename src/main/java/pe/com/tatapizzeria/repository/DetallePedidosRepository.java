@@ -7,15 +7,15 @@ import pe.com.tatapizzeria.entity.DetallePedidosEntity;
 import java.util.List;
 
 @Repository
-public interface DetallePedidosRepository extends JpaRepository<DetallePedidosEntity, Long> {
+public interface DetallePedidosRepository extends JpaRepository<DetallePedidosEntity, Integer> {
 
     @Query("SELECT d FROM DetallePedidosEntity d WHERE d.estado = true")
     List<DetallePedidosEntity> findAllCustom();
 
     @Query("SELECT d FROM DetallePedidosEntity d WHERE d.pedido.id = ?1 AND d.estado = true")
-    List<DetallePedidosEntity> findByPedidoId(Long idPedido);
+    List<DetallePedidosEntity> findByPedidoId(Integer idPedido);
     
     // Para recalcular montos
     @Query("SELECT d FROM DetallePedidosEntity d WHERE d.pedido.id = ?1 AND d.estado = true")
-    List<DetallePedidosEntity> findByPedidoIdAndEstadoTrue(Long idPedido);
+    List<DetallePedidosEntity> findByPedidoIdAndEstadoTrue(Integer idPedido);
 }

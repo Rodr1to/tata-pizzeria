@@ -21,13 +21,13 @@ public class CategoriasProductoServiceImpl implements CategoriasProductoService 
     public List<CategoriasProductoEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public CategoriasProductoEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public CategoriasProductoEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public CategoriasProductoEntity add(CategoriasProductoEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public CategoriasProductoEntity update(CategoriasProductoEntity obj, Long id) {
+    public CategoriasProductoEntity update(CategoriasProductoEntity obj, Integer id) {
         CategoriasProductoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class CategoriasProductoServiceImpl implements CategoriasProductoService 
     }
 
     @Override
-    public CategoriasProductoEntity delete(Long id) {
+    public CategoriasProductoEntity delete(Integer id) {
         CategoriasProductoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class CategoriasProductoServiceImpl implements CategoriasProductoService 
     }
 
     @Override
-    public CategoriasProductoEntity enable(Long id) {
+    public CategoriasProductoEntity enable(Integer id) {
         CategoriasProductoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

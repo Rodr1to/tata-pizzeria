@@ -26,7 +26,7 @@ public class ClientesController {
     }
 
     @GetMapping("/actualiza/{id}")
-    public String MostrarActualizarClientes(Model modelo, @PathVariable Long id) {
+    public String MostrarActualizarClientes(Model modelo, @PathVariable Integer id) {
         modelo.addAttribute("clientes", servicio.findById(id));
         return "clientes/actualizarclientes";
     }
@@ -38,19 +38,19 @@ public class ClientesController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String EliminarClientes(@PathVariable Long id) {
+    public String EliminarClientes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/clientes/listar";
     }
 
     @GetMapping("/habilitar/{id}")
-    public String HabilitarClientes(@PathVariable Long id) {
+    public String HabilitarClientes(@PathVariable Integer id) {
         servicio.enable(id);
         return "redirect:/clientes/habilita";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String DeshabilitarClientes(@PathVariable Long id) {
+    public String DeshabilitarClientes(@PathVariable Integer id) {
         servicio.delete(id);
         return "redirect:/clientes/habilita";
     }
@@ -70,7 +70,7 @@ public class ClientesController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String ActualizarClientes(@ModelAttribute("cliente") ClientesEntity obj, @PathVariable Long id) {
+    public String ActualizarClientes(@ModelAttribute("cliente") ClientesEntity obj, @PathVariable Integer id) {
         servicio.update(obj, id);
         return "redirect:/clientes/listar";
     }

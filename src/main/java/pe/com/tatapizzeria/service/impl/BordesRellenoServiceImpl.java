@@ -21,13 +21,13 @@ public class BordesRellenoServiceImpl implements BordesRellenoService {
     public List<BordesRellenoEntity> findAllCustom() { return repositorio.findAllCustom(); }
 
     @Override
-    public BordesRellenoEntity findById(Long id) { return repositorio.findById(id).orElse(null); }
+    public BordesRellenoEntity findById(Integer id) { return repositorio.findById(id).orElse(null); }
 
     @Override
     public BordesRellenoEntity add(BordesRellenoEntity obj) { return repositorio.save(obj); }
 
     @Override
-    public BordesRellenoEntity update(BordesRellenoEntity obj, Long id) {
+    public BordesRellenoEntity update(BordesRellenoEntity obj, Integer id) {
         BordesRellenoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             BeanUtils.copyProperties(obj, actual, "codigo");
@@ -37,7 +37,7 @@ public class BordesRellenoServiceImpl implements BordesRellenoService {
     }
 
     @Override
-    public BordesRellenoEntity delete(Long id) {
+    public BordesRellenoEntity delete(Integer id) {
         BordesRellenoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(false);
@@ -47,7 +47,7 @@ public class BordesRellenoServiceImpl implements BordesRellenoService {
     }
 
     @Override
-    public BordesRellenoEntity enable(Long id) {
+    public BordesRellenoEntity enable(Integer id) {
         BordesRellenoEntity actual = repositorio.findById(id).orElse(null);
         if (actual != null) {
             actual.setEstado(true);

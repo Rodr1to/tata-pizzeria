@@ -19,17 +19,17 @@ public class UsuariosRestController {
     public List<UsuariosEntity> findAllCustom() { return s.findAllCustom(); }
 
     @GetMapping("/{id}")
-    public UsuariosEntity findById(@PathVariable Long id) { return s.findById(id); }
+    public UsuariosEntity findById(@PathVariable Integer id) { return s.findById(id); }
 
     @PostMapping
     public UsuariosEntity add(@RequestBody UsuariosEntity o) { return s.add(o); }
 
     @PutMapping("/{id}")
-    public UsuariosEntity update(@RequestBody UsuariosEntity o, @PathVariable Long id) { return s.update(o, id); }
+    public UsuariosEntity update(@RequestBody UsuariosEntity o, @PathVariable Integer id) { return s.update(o, id); }
 
     @DeleteMapping("/{id}")
-    public UsuariosEntity delete(@PathVariable Long id) { return s.delete(id); }
+    public UsuariosEntity delete(@PathVariable Integer id) { return s.delete(id); }
 
     @PatchMapping("/{id}")
-    public UsuariosEntity enable(@PathVariable Long id) { return s.enable(id); }
+    public UsuariosEntity enable(@PathVariable Integer id) { return s.enable(id); }
 }
